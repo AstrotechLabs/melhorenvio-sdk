@@ -72,10 +72,8 @@ final class AddShippingToCart
                 'headers' => $headers,
                 'json' => $body
             ]);
+
             $responsePayload = json_decode($response->getBody()->getContents(), true);
-            echo "<pre>";
-            var_dump($responsePayload);
-            die;
         } catch (ClientException $e) {
             $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
 

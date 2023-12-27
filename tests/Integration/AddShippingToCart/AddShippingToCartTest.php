@@ -23,7 +23,7 @@ final class AddShippingToCartTest extends TestCase
         );
 
         $result = $addShippingToCart->adding(new AddShippingToCartInputData(
-            service: 1,
+            service: 2,
             from: [
                 "name" => self::$faker->name(),
                 "company_document" => self::$faker->cnpj(),
@@ -45,10 +45,12 @@ final class AddShippingToCartTest extends TestCase
                 ["name" => self::$faker->name()],
             ],
             volumes:[
+                [
                 "height" => 43,
                 "width" => 60,
                 "length" => 70,
                 "weight" => 30
+                ]
             ],
             options:[
                 "insurance_value" => 50.00,
