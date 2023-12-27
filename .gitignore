@@ -30,10 +30,6 @@ tests/_output/*
 tests/_support/_generated
 
 .env
-.docker/mysql
-.docker/redis
-.docker/dumps
-.docker/rabbitmq
 .php_cs.cache
 tests/coverage
 tests/.phpunit.result.cache
