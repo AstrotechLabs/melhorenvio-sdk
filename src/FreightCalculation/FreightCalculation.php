@@ -35,12 +35,10 @@ final class FreightCalculation
             'User-Agent' => $this->userAgent
         ];
 
-        $body = $input->toArray();
-
         try {
             $response = $this->httpClient->get("/api/v2/me/shipment/calculate", [
                 'headers' => $headers,
-                'json' => $body
+                'json' => $input->toArray()
             ]);
 
             $responsePayload = json_decode($response->getBody()->getContents(), true);

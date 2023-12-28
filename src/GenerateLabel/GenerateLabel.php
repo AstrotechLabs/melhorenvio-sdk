@@ -34,12 +34,10 @@ final class GenerateLabel
                 'User-Agent' => $this->userAgent
             ];
 
-            $body = $input->toArray();
-
             try {
                 $response = $this->httpClient->post("/api/v2/me/shipment/generate", [
                     'headers' => $headers,
-                    'json' => $body
+                    'json' => $input->toArray()
                 ]);
                 $responsePayload = json_decode($response->getBody()->getContents(), true);
             } catch (ClientException $e) {
