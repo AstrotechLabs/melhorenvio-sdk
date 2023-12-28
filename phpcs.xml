@@ -8,7 +8,6 @@
     <arg name="colors"/>
 
     <file>./src</file>
-    <file>./config</file>
 
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/runtime/*</exclude-pattern>

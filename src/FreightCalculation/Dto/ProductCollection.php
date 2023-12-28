@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AstrotechLabs\MelhorEnvio\FreightCalculation\Dto;
 
 use AstrotechLabs\MelhorEnvio\Shared\Utils\CollectionBase;

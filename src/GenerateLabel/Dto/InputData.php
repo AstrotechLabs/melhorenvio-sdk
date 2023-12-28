@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace AstrotechLabs\MelhorEnvio\GenerateLabel\Dto;
 
-use AstrotechLabs\MelhorEnvio\GenerateLabel\MelhorEnvioGenerateException;
 use JsonSerializable;
-
-use function PHPUnit\Framework\isEmpty;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\MelhorEnvioGenerateException;
 
 final class InputData implements JsonSerializable
 {

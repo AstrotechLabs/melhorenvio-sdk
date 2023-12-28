@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto;
 
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\MelhorEnvioCheckoutLabelException;
 use JsonSerializable;
-
-use function PHPUnit\Framework\isEmpty;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\MelhorEnvioCheckoutLabelException;
 
 final class InputData implements JsonSerializable
 {

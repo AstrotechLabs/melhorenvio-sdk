@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AstrotechLabs\MelhorEnvio;
 
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\AddShippingToCart;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData as AddShippingToCartInput;
 use AstrotechLabs\MelhorEnvio\CheckoutLabel\CheckoutLabel;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData as CheckoutLabelInput;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData as FreightCalculationInput;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\FreightCalculation;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData as GenerateLabelInput;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\GenerateLabel;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\AddShippingToCart;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\FreightCalculation;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData as CheckoutLabelInput;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData as GenerateLabelInput;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData as AddShippingToCartInput;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData as FreightCalculationInput;
 
 final class MelhorEnvioService
 {

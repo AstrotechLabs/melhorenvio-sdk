@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace FreightCalculation;
 
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FromData;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Package;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\PackageCollection;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ProductCollection;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Products;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ToData;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\FreightCalculation;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\MelhorEnvioFreightCalculationException;
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ToData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Package;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FromData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Products;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\FreightCalculation;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\PackageCollection;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ProductCollection;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\MelhorEnvioFreightCalculationException;
 
 final class FreightCalculationTest extends TestCase
 {

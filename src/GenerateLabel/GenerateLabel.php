@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AstrotechLabs\MelhorEnvio\GenerateLabel;
 
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\MelhorEnvioAddShippingToCartException;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OutputData;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OutputData;
 
 final class GenerateLabel
 {
@@ -27,32 +28,32 @@ final class GenerateLabel
 
     public function generate(InputData $input): OutputData
     {
-            $headers = [
-                'Accept' => 'application/json',
-                'Authorization' => "Bearer $this->accessToken",
-                'Content-Type' => 'application/json',
-                'User-Agent' => $this->userAgent
-            ];
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => "Bearer $this->accessToken",
+            'Content-Type' => 'application/json',
+            'User-Agent' => $this->userAgent
+        ];
 
-            try {
-                $response = $this->httpClient->post("/api/v2/me/shipment/generate", [
-                    'headers' => $headers,
-                    'json' => $input->toArray()
-                ]);
-                $responsePayload = json_decode($response->getBody()->getContents(), true);
-            } catch (ClientException $e) {
-                $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
+        try {
+            $response = $this->httpClient->post("/api/v2/me/shipment/generate", [
+                'headers' => $headers,
+                'json' => $input->toArray()
+            ]);
+            $responsePayload = json_decode($response->getBody()->getContents(), true);
+        } catch (ClientException $e) {
+            $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
 
-                throw new MelhorEnvioGenerateException(
-                    code: $e->getCode(),
-                    key: array_key_first($responsePayload['errors']),
-                    description: $responsePayload['message'],
-                    responsePayload:$responsePayload
-                );
-            }
-
-            return new OutputData(
-                details: $responsePayload
+            throw new MelhorEnvioGenerateException(
+                code: $e->getCode(),
+                key: array_key_first($responsePayload['errors']),
+                description: $responsePayload['message'],
+                responsePayload:$responsePayload
             );
+        }
+
+        return new OutputData(
+            details: $responsePayload
+        );
     }
 }

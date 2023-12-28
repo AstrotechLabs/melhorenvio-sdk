@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Integration\GenerateLabel;
 
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\Order;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OrderCollection;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\GenerateLabel;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\MelhorEnvioGenerateException;
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\Order;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\GenerateLabel;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OrderCollection;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\MelhorEnvioGenerateException;
 
 class GenerateLabelTest extends TestCase
 {

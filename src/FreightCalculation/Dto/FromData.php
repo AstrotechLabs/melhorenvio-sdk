@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AstrotechLabs\MelhorEnvio\FreightCalculation\Dto;
 
-use AstrotechLabs\MelhorEnvio\FreightCalculation\MelhorEnvioFreightCalculationException;
 use JsonSerializable;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\MelhorEnvioFreightCalculationException;
 
 class FromData implements JsonSerializable
 {

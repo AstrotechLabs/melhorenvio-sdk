@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AstrotechLabs\MelhorEnvio\AddShippingToCart;
 
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OutputData;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OutputData;
 
 final class AddShippingToCart
 {

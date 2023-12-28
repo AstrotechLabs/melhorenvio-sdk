@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AstrotechLabs\MelhorEnvio\GenerateLabel\Dto;
 
-use AstrotechLabs\MelhorEnvio\GenerateLabel\MelhorEnvioGenerateException;
 use JsonSerializable;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\MelhorEnvioGenerateException;
 
 class Order implements JsonSerializable
 {

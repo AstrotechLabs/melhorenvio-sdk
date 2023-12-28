@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AstrotechLabs\MelhorEnvio\CheckoutLabel;
 
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OutputData;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\MelhorEnvioGenerateException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OutputData;
 
 final class CheckoutLabel
 {

@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AstrotechLabs\MelhorEnvio\FreightCalculation\Dto;
 
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InvoiceData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\TagsData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\MelhorEnvioAddShippingToCartException;
 use JsonSerializable;
 
 final class OptionsData implements JsonSerializable

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace CheckoutLabel;
 
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\CheckoutLabel;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\Order;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OrderCollection;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\MelhorEnvioCheckoutLabelException;
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\Order;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\CheckoutLabel;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OrderCollection;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\MelhorEnvioCheckoutLabelException;
 
 final class CheckoutLabelTest extends TestCase
 {

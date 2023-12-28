@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AstrotechLabs\MelhorEnvio\FreightCalculation;
 
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\OutputData;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\OutputData;
 
 final class FreightCalculation
 {

@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Integration\AddShippingToCart;
 
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\AddShippingToCart;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\FromData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OptionsData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ProductCollection;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Product;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ToData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\VolumeCollection;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volume;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\MelhorEnvioAddShippingToCartException;
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ToData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volume;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Product;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\FromData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OptionsData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\AddShippingToCart;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\VolumeCollection;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ProductCollection;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\MelhorEnvioAddShippingToCartException;
 
 final class AddShippingToCartTest extends TestCase
 {

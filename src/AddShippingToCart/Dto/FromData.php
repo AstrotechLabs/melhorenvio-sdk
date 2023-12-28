@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto;
 
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\MelhorEnvioAddShippingToCartException;
 use JsonSerializable;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\MelhorEnvioAddShippingToCartException;
 
 final class FromData implements JsonSerializable
 {
