@@ -6,7 +6,7 @@ namespace AstrotechLabs\MelhorEnvio\AddShippingToCart;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OutputData;
 
 final class AddShippingToCart
@@ -26,7 +26,7 @@ final class AddShippingToCart
         );
     }
 
-    public function add(InputData $input): OutputData
+    public function add(AddShippingToCartItem $input): OutputData
     {
         $headers = [
             'Accept' => 'application/json',

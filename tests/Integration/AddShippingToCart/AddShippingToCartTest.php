@@ -10,7 +10,7 @@ use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ToData;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volume;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Product;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\FromData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OptionsData;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\AddShippingToCart;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\VolumeCollection;
@@ -29,7 +29,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $result = $addShippingToCart->add(new InputData(
+        $result = $addShippingToCart->add(new AddShippingToCartItem(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -87,7 +87,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new InputData(
+        $addShippingToCart->add(new AddShippingToCartItem(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -139,7 +139,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new InputData(
+        $addShippingToCart->add(new AddShippingToCartItem(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -191,7 +191,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new InputData(
+        $addShippingToCart->add(new AddShippingToCartItem(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -243,7 +243,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new InputData(
+        $addShippingToCart->add(new AddShippingToCartItem(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -293,7 +293,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new InputData(
+        $addShippingToCart->add(new AddShippingToCartItem(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -343,7 +343,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new InputData(
+        $addShippingToCart->add(new AddShippingToCartItem(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),

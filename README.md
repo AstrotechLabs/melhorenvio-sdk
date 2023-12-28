@@ -54,9 +54,9 @@ $melhorEnvioService = new MelhorEnvioService(
 );
 
 $freightCalculationResponse = $melhorEnvioService->freightCalculate(
-    new InputData(
-        new ToData(postalCode: "60820050"),
-        new FromData(postalCode: "60820050"),
+    inputData: new InputData(
+        to: new ToData(postalCode: "60820050"),
+        from: new FromData(postalCode: "60820050"),
         products: new ProductCollection(
             [
                 new Product(
@@ -161,9 +161,9 @@ $melhorEnvioService = new MelhorEnvioService(
 );
 
 $freightCalculationResponse = $melhorEnvioService->freightCalculate(
-    new InputData(
-        new ToData(postalCode: "60876590"),
-        new FromData(postalCode: "60820050"),
+    inputData: new InputData(
+        to: new ToData(postalCode: "60876590"),
+        from: new FromData(postalCode: "60820050"),
         package: new PackageCollection(
             [
                 new Package(
@@ -258,10 +258,10 @@ dimensões e valor declarado.
 Isso proporciona uma visão abrangente dos envios planejados, facilitando a compra de fretes, a geração de etiquetas  tudo em um só lugar.
 
 Antes de prosseguir, você deverá inserir á um carrinho de compras os produtos que serão enviados.
-  
+
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ToData;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\FromData;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ProductCollection;
@@ -276,7 +276,7 @@ $melhorEnvioService = new MelhorEnvioService(
     //isSandBox: true (Optional)
 );
 
-$addShippingToCartResponse = $melhorEnvioService->add(new InputData(
+$addShippingToCartResponse = $melhorEnvioService->addShippingToCart(new AddShippingToCartItem(
         service: 2,
         from: new FromData(
             name: self::$faker->name(),
@@ -361,7 +361,7 @@ $melhorEnvioService = new MelhorEnvioService(
 );
 
 $checkoutLabelResponse = $melhorEnvioService->checkoutLabel(
-    new InputData(
+    inputData: new InputData(
         orders: new OrderCollection(
             [
                 new Order(
@@ -476,7 +476,7 @@ $generateLabelResponse = $melhorEnvioService->generateLabel(new InputData(
         orders: new OrderCollection(
             [
                 new Order(
-                    key: $addShippingToCartResponse['id']
+                    key: '9af3f99a-301e-4239-9c3d-7cb7e7bb3825'
                 )
             ]
         )
@@ -498,10 +498,31 @@ Saída
 ]
 ```
 
-## Segue o exemplo prático do fluxo de compra de frete e geração de etiqueta
+## Abaixo veja o exemplo do fluxo desde a cotação do frete à geração de etiquetas
 
 ```php
+<?php
 
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OptionsData as AddShippingToCartOptionData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Product as AddShippingToCartProduct;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ProductCollection as AddShippingToCartProductCollection;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ToData as AddShippingToCartToData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volume as AddShippingToCartVolume;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\VolumeCollection as AddShippingToCartVolumeCollection;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\FromData as AddShippingToCartFromData;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData as CheckoutLabelInput;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\Order as CheckoutLabelOrder;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OrderCollection as CheckoutLabelOrderCollection;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData as GenerateLabelInputData;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\Order as GenerateLabelOrder;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OrderCollection as GenerateLabelOrderCollection;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FromData as FreightCalculationFromData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData as FreightCalculationInputData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Product as FreightCalculationProduct;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ProductCollection as FreightCalculationProductCollection;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ToData as FreightCalculationToData;
+use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
 
 $melhorEnvioService = new MelhorEnvioService(
     accessToken: "xxxxxx.yyyyyyy.zzzzzz",
@@ -509,69 +530,103 @@ $melhorEnvioService = new MelhorEnvioService(
     isSandBox: true
 );
 
+/**
+ Aqui executamos a ação de calcular o frete.
+ */
 
-$addShippingToCartResponse = $melhorEnvioService->add(new InputData(
-        service: 2,
-        from: new FromData(
-            name: self::$faker->name(),
-            companyDocument: "93.472.569/0001-30",
-            address: "Jardim sem Oliveiras",
-            city: "Cidade dos Empregados",
-            postalCode:"08552070"
-        ),
-        to: new ToData(
-            name: self::$faker->name(),
-            document: "21540911055",
-            address: "Jardim das Oliveiras",
-            city: "Cidade 2000",
-            postalCode:"60820050",
-            isPf: true
-        ),
-        products: new ProductCollection(
+$melhorEnvioService->freightCalculate(
+    new FreightCalculationInputData(
+        to: new FreightCalculationToData(postalCode: "60820050"),
+        from: new FreightCalculationFromData(postalCode: "60820050"),
+        products: new FreightCalculationProductCollection(
             [
-                new Product(
-                    name: 'perfume'
+                new FreightCalculationProduct(
+                    id: 'x',
+                    width: 11,
+                    height: 17,
+                    length: 11,
+                    weight: 3,
+                    insurance_value: 10.1,
+                    quantity: 1
                 )
             ]
-        ),
-        volumes: new VolumeCollection(
-            [
-                new Volume(
-                    height: 43,
-                    width: 60,
-                    length: 70,
-                    weight: 30
-                )
-            ]
-        ),
-        options:new OptionsData(
-            insuranceValue: 50.00,
         )
-    ));
+    )
+);
 
+/**
+Iniciando o fluxo de adição do pedido no carrinho, compra de frete e geração da etiqueta
+ */
+
+$addShippingToCartResponse = $melhorEnvioService->addShippingToCart(new AddShippingToCartItem(
+    service: 2,
+    from: new AddShippingToCartFromData(
+        name: self::$faker->name(),
+        companyDocument: "93.472.569/0001-30",
+        address: "Jardim sem Oliveiras",
+        city: "Cidade dos Empregados",
+        postalCode:"08552070"
+    ),
+    to: new AddShippingToCartToData(
+        name: self::$faker->name(),
+        document: "21540911055",
+        address: "Jardim das Oliveiras",
+        city: "Cidade 2000",
+        postalCode:"60820050",
+        isPf: true
+    ),
+    products: new AddShippingToCartProductCollection(
+        [
+            new AddShippingToCartProduct(
+                name: 'perfume'
+            )
+        ]
+    ),
+    volumes: new AddShippingToCartVolumeCollection(
+        [
+            new AddShippingToCartVolume(
+                height: 43,
+                width: 60,
+                length: 70,
+                weight: 30
+            )
+        ]
+    ),
+    options:new AddShippingToCartOptionData(
+        insuranceValue: 50.00,
+    )
+));
+
+/**
+ Compra de frete
+ */
 
 $checkoutLabelResponse = $melhorEnvioService->checkoutLabel(
-    new InputData(
-        orders: new OrderCollection(
+    new CheckoutLabelInput(
+        orders: new CheckoutLabelOrderCollection(
             [
-                new Order(
+                new CheckoutLabelOrder(
                     key: $addShippingToCartResponse['id']
                 )
             ]
         )
     )
 );
-    
-$generateLabelResponse = $melhorEnvioService->generateLabel(new InputData(
-        orders: new OrderCollection(
-            [
-                new Order(
+
+/**
+ Geração da etiqueta
+ */
+
+$generateLabelResponse = $melhorEnvioService->generateLabel(new GenerateLabelInputData(
+    orders: new GenerateLabelOrderCollection(
+        [
+                new GenerateLabelOrder(
                     key: $addShippingToCartResponse['id']
                 )
             ]
-        )
     )
-);
+));
+
 ```
 
 ## Contributing

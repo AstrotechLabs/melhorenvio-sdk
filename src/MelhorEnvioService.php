@@ -10,7 +10,7 @@ use AstrotechLabs\MelhorEnvio\AddShippingToCart\AddShippingToCart;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\FreightCalculation;
 use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData as CheckoutLabelInput;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData as GenerateLabelInput;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData as AddShippingToCartInput;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem as AddShippingToCartInput;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData as FreightCalculationInput;
 
 final class MelhorEnvioService
