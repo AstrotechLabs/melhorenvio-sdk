@@ -9,7 +9,7 @@ use JsonSerializable;
 final class GenerateLabelOutputData implements JsonSerializable
 {
     public function __construct(
-        public readonly array $orders
+        public readonly array $details
     ) {
     }
 

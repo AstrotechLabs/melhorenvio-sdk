@@ -35,48 +35,32 @@ final class FreightCalculation
                 'User-Agent' => $this->userAgent
             ];
 
-            $body = [
-                "from" => ["postal_code" => preg_replace("/[^0-9]/", "", $input->from)],
-                "to" => ["postal_code" => preg_replace("/[^0-9]/", "", $input->to)],
-                ...$input->extra
-            ];
-
-            $fieldProduct = ["id", "width", "height", "length", "weight", "insurance_value", "quantity"];
-            if (isset($input->extra['products'])) {
-                foreach ($input->extra['products'] as $key => $product) {
-                    foreach ($fieldProduct as $field) {
-                        if (!isset($product[$field]) || empty($product[$field])) {
-                            throw new MelhorEnvioFreightCalculationException(
-                                code: 422,
-                                key: $field,
-                                description: "O campo products.{$key}.{$field} é obrigatório.",
-                                responsePayload:[]
-                            );
-                        }
-                    }
-                }
+            $productOrPackage = [];
+            if ($input->isProduct) {
+                $input->products->map(function ($product) use (&$productOrPackage) {
+                    $productOrPackage['products'][] = $product->toArray();
+                });
+            } else {
+                $input->package->map(function ($package) use (&$productOrPackage) {
+                    $productOrPackage['package'][] = $package->toArray();
+                });
             }
-            $fieldPackage = ["height", "width", "length", "weight"];
-            if (isset($input->extra['package'])) {
-                foreach ($fieldPackage as $field) {
-                    if (!isset($input->extra['package'][$field]) || empty($input->extra['package'][$field])) {
-                        throw new MelhorEnvioFreightCalculationException(
-                            code: 422,
-                            key: "package.{$field}",
-                            description: "O campo package.{$field} é obrigatório.",
-                            responsePayload:[]
-                        );
-                    }
-                }
-            }
-            try {
+            $body = array_filter([
+                "from" => ["postal_code" => preg_replace("/[^0-9]/", "", $input->from->postalCode)],
+                "to" => ["postal_code" => preg_replace("/[^0-9]/", "", $input->to->postalCode)],
+                "options" => $input->options?->toArray(),
+                "service" => $input->services,
+                ...$productOrPackage
+            ]);
+        try {
                 $response = $this->httpClient->get("/api/v2/me/shipment/calculate", [
                     'headers' => $headers,
                     'json' => $body
                     ]);
 
                 $responsePayload = json_decode($response->getBody()->getContents(), true);
-            } catch (ClientException $e) {
+
+        } catch (ClientException $e) {
                 $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
                 throw new MelhorEnvioFreightCalculationException(
                     code: $e->getCode(),
@@ -84,8 +68,10 @@ final class FreightCalculation
                     description: $responsePayload['message'],
                     responsePayload:$responsePayload
                 );
-            }
+        }
 
-            return new FreightCalculationOutputData($responsePayload);
+            return new FreightCalculationOutputData(
+                deliveryDetail: $responsePayload,
+            );
     }
 }

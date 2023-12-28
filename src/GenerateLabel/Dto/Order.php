@@ -1,22 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 namespace AstrotechLabs\MelhorEnvio\GenerateLabel\Dto;
 
 use AstrotechLabs\MelhorEnvio\GenerateLabel\MelhorEnvioGenerateException;
 use JsonSerializable;
 
-final class GenerateLabelInputData implements JsonSerializable
+class Order implements JsonSerializable
 {
     public function __construct(
-        public readonly OrderCollection $orders
+        public readonly string $key,
     ) {
-        if (!$this->orders->count()) {
+        if (empty($this->key)) {
             throw new MelhorEnvioGenerateException(
-                code:400,
-                key:"orders",
-                description: "O campo orders deve ter pelo menos 1 itens.",
+                code: 400,
+                key: "key",
+                description: "a key da order é obrigatória",
                 responsePayload:[]
             );
         }

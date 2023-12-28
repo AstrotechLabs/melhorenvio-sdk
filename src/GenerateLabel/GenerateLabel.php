@@ -25,7 +25,7 @@ final class GenerateLabel
         );
     }
 
-    public function generating(GenerateLabelInputData $input): GenerateLabelOutputData
+    public function generate(GenerateLabelInputData $input): GenerateLabelOutputData
     {
             $headers = [
                 'Accept' => 'application/json',
@@ -34,18 +34,14 @@ final class GenerateLabel
                 'User-Agent' => $this->userAgent
             ];
 
-            $body = [
-                "orders" => $input->orders,
-            ];
+            $orders = [];
+            $input->orders->map(function ($order) use (&$orders) {
+                $orders[] = $order->key;
+            });
 
-            if (empty($input->orders)) {
-                throw new MelhorEnvioGenerateException(
-                    code:422,
-                    key:"orders",
-                    description: "O campo orders deve ter pelo menos 1 itens.",
-                    responsePayload:[]
-                );
-            }
+            $body = [
+                "orders" => $orders,
+            ];
 
             try {
                 $response = $this->httpClient->post("/api/v2/me/shipment/generate", [
@@ -63,6 +59,9 @@ final class GenerateLabel
                     responsePayload:$responsePayload
                 );
             }
-            return new GenerateLabelOutputData($responsePayload);
+
+            return new GenerateLabelOutputData(
+                details: $responsePayload
+            );
     }
 }

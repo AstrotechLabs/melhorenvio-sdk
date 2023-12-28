@@ -8,12 +8,12 @@ class AddShippingToCartInputData implements JsonSerializable
 {
     public function __construct(
         public readonly int $service,
-        public readonly array $from,
-        public readonly array $to,
-        public readonly array $products,
-        public readonly array $volumes,
-        public readonly array $options,
-        public readonly array $extras = [],
+        public readonly FromData $from,
+        public readonly ToData $to,
+        public readonly ProductCollection $products,
+        public readonly VolumeCollection $volumes,
+        public readonly OptionsData $options,
+        public readonly int|string $agency = '',
     ) {
     }
 

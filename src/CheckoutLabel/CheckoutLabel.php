@@ -25,7 +25,7 @@ final class CheckoutLabel
         );
     }
 
-    public function confirmingPushase(CheckoutLabelInputData $input): CheckoutLabelOutputData
+    public function confirmPushase(CheckoutLabelInputData $input): CheckoutLabelOutputData
     {
         $headers = [
             'Accept' => 'application/json',
@@ -34,18 +34,14 @@ final class CheckoutLabel
             'User-Agent' => $this->userAgent
         ];
 
-        $body = [
-            "orders" => $input->orders,
-        ];
+        $orders = [];
+        $input->orders->map(function ($order) use (&$orders) {
+            $orders[] = $order->key;
+        });
 
-        if (empty($input->orders)) {
-            throw new MelhorEnvioCheckoutLabelException(
-                code:422,
-                key:"orders",
-                description: "O campo orders deve ter pelo menos 1 itens.",
-                responsePayload:[]
-            );
-        }
+        $body = [
+            "orders" => $orders,
+        ];
 
         try {
             $response = $this->httpClient->post("/api/v2/me/shipment/checkout", [
@@ -64,6 +60,9 @@ final class CheckoutLabel
             );
         }
 
-        return new CheckoutLabelOutputData($responsePayload);
+        return new CheckoutLabelOutputData(
+            purchase: $responsePayload['purchase'],
+            payloadDetail: $responsePayload
+        );
     }
 }

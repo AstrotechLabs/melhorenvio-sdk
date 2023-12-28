@@ -26,7 +26,7 @@ final class AddShippingToCart
         );
     }
 
-    public function adding(AddShippingToCartInputData $input): AddShippingToCartOutputData
+    public function add(AddShippingToCartInputData $input): AddShippingToCartOutputData
     {
         $headers = [
             'Accept' => 'application/json',
@@ -35,36 +35,25 @@ final class AddShippingToCart
             'User-Agent' => $this->userAgent
         ];
 
-        if (
-            !array_key_exists("document", $input->from) && !array_key_exists("company_document", $input->from)
-        ) {
-                throw new MelhorEnvioAddShippingToCartException(
-                    code:422,
-                    key:"from.document or from.company_document",
-                    description: "O campo cnpj ou cpf devem ser declarados.",
-                    responsePayload:[]
-                );
-        }
+        $products = [];
+        $input->products->map(function ($product) use (&$products) {
+                      $products[] = $product->toArray();
+        });
 
-        if (
-            !array_key_exists("document", $input->to) && !array_key_exists("company_document", $input->to)
-        ) {
-            throw new MelhorEnvioAddShippingToCartException(
-                code:422,
-                key:"to.document or to.company_document",
-                description: "O campo cnpj ou cpf devem ser declarados.",
-                responsePayload:[]
-            );
-        }
+        $volumes = [];
+        $input->volumes->map(function ($volume) use (&$volumes) {
+            $volumes[] = $volume->toArray();
+        });
+
 
         $body = [
             "service" => $input->service,
-            "from" => $input->from,
-            "to" => $input->to,
-            "products" => $input->products,
-            "volumes" => $input->volumes,
+            "agency" => $input->agency,
+            "from" => array_filter($input->from->toArray()),
+            "to" => array_filter($input->to->toArray()),
+            "products" => $products,
+            "volumes" => $volumes,
             "options" => $input->options,
-            ...$input->extras
         ];
 
         try {
@@ -72,7 +61,6 @@ final class AddShippingToCart
                 'headers' => $headers,
                 'json' => $body
             ]);
-
             $responsePayload = json_decode($response->getBody()->getContents(), true);
         } catch (ClientException $e) {
             $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
@@ -84,6 +72,15 @@ final class AddShippingToCart
                 responsePayload:$responsePayload
             );
         }
-        return new AddShippingToCartOutputData($responsePayload);
+        return new AddShippingToCartOutputData(
+            id: $responsePayload['id'],
+            protocol: $responsePayload['protocol'],
+            serviceId: $responsePayload['service_id'],
+            price: $responsePayload['price'],
+            deliveryMin: $responsePayload['delivery_min'],
+            deliveryMax: $responsePayload['delivery_max'],
+            status: $responsePayload['status'],
+            payloadDetails: $responsePayload
+        );
     }
 }
