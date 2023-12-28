@@ -45,7 +45,7 @@ final class InputData implements JsonSerializable
             "options" => $this->options?->toArray(),
             "service" => $this->services,
             "products" => $this->products?->toArray(),
-            "package" => $this->products?->toArray()
+            "package" => $this->package?->toArray()
         ]);
     }
 

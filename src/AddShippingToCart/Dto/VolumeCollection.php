@@ -10,4 +10,14 @@ class VolumeCollection extends CollectionBase
     {
         return Volume::class;
     }
+
+    public function toArray(): array
+    {
+        $items = get_object_vars($this);
+        $volumes = [];
+        foreach ($items['items'] as $key => $item) {
+            $volumes[$key] = $item->toArray();
+        }
+        return $volumes;
+    }
 }

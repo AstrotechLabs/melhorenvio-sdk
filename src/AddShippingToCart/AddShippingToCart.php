@@ -35,26 +35,7 @@ final class AddShippingToCart
             'User-Agent' => $this->userAgent
         ];
 
-        $products = [];
-        $input->products->map(function ($product) use (&$products) {
-                      $products[] = $product->toArray();
-        });
-
-        $volumes = [];
-        $input->volumes->map(function ($volume) use (&$volumes) {
-            $volumes[] = $volume->toArray();
-        });
-
-
-        $body = [
-            "service" => $input->service,
-            "agency" => $input->agency,
-            "from" => array_filter($input->from->toArray()),
-            "to" => array_filter($input->to->toArray()),
-            "products" => $products,
-            "volumes" => $volumes,
-            "options" => $input->options,
-        ];
+        $body = $input->toArray();
 
         try {
             $response = $this->httpClient->post("/api/v2/me/cart", [

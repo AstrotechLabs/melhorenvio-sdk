@@ -62,7 +62,7 @@ final class CheckoutLabel
 
         return new OutputData(
             purchase: $responsePayload['purchase'],
-            payloadDetail: $responsePayload
+            payloadDetails: $responsePayload
         );
     }
 }

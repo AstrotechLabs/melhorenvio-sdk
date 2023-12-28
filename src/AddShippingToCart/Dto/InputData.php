@@ -19,7 +19,15 @@ class InputData implements JsonSerializable
 
     public function toArray(): array
     {
-        return get_object_vars($this);
+        return [
+            "service" => $this->service,
+            "agency" => $this->agency,
+            "from" => array_filter($this->from->toArray()),
+            "to" => array_filter($this->to->toArray()),
+            "products" => $this->products->toArray(),
+            "volumes" => $this->volumes->toArray(),
+            "options" => $this->options
+        ];
     }
 
     public function jsonSerialize(): array
