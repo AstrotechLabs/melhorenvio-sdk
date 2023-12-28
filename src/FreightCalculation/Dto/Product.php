@@ -6,7 +6,7 @@ namespace AstrotechLabs\MelhorEnvio\FreightCalculation\Dto;
 
 use JsonSerializable;
 
-class Products implements JsonSerializable
+class Product implements JsonSerializable
 {
     public function __construct(
         public readonly string $id,

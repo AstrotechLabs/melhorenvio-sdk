@@ -9,7 +9,7 @@ use Tests\Trait\HttpClientMock;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ToData;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Package;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FromData;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Products;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Product;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\FreightCalculation;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\PackageCollection;
@@ -34,7 +34,7 @@ final class FreightCalculationTest extends TestCase
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
                 [
-                    new Products(
+                    new Product(
                         id: 'x',
                         width: 11,
                         height: 17,
@@ -93,7 +93,7 @@ final class FreightCalculationTest extends TestCase
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
                 [
-                    new Products(
+                    new Product(
                         id: 'x',
                         width: 11,
                         height: 17,
@@ -124,7 +124,7 @@ final class FreightCalculationTest extends TestCase
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
                 [
-                    new Products(
+                    new Product(
                         id: 'x',
                         width: 11,
                         height: 17,
@@ -155,7 +155,7 @@ final class FreightCalculationTest extends TestCase
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
                 [
-                    new Products(
+                    new Product(
                         id: 'x',
                         width: 11,
                         height: 17,
