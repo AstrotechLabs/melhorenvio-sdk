@@ -23,14 +23,21 @@ na seção `require` do seu arquivo `composer.json`.
 
 ## Como Usar?
 
-### Cotação do Frete
-
-## Calculando por Produtos
+## Cotação do Frete 
+### Por Produtos
+- É possível realizar o cálculo de um frete por produtos individualmente, informando o peso e os demais dados abaixo
 ```php
+use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ToData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FromData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ProductCollection;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Product;
+
 $melhorEnvioService = new MelhorEnvioService(
     accessToken: "xxxxxx.yyyyyyy.zzzzzz",
-    userAgent: "name project (email vinculed)",
-            //isSandBox: true (Optional)
+    userAgent: "name project (email vinculed)", // esse nome e email são os dados que foram cadastrados no melhor envio
+    //isSandBox: true (Optional)
 );
 
 $freightCalculationResponse = $melhorEnvioService->freightCalculate(
@@ -39,7 +46,7 @@ $freightCalculationResponse = $melhorEnvioService->freightCalculate(
         new FromData(postalCode: "60820050"),
         products: new ProductCollection(
             [
-                new Products(
+                new Product(
                     id: 'x',
                     width: 11,
                     height: 17,
@@ -58,87 +65,90 @@ Saída
 
 ```
 [
-    [deliveryDetails] => [
-            [0] => [
-                    [id] => 1
-                    [name] => PAC
-                    [error] => Serviço econômico indisponível para o trecho.
-                    [company] => [
-                            [id] => 1
-                            [name] => Correios
-                            [picture] => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
+    'deliveryDetails' => [
+            [
+              'id' => 1
+              'name' => PAC
+              'error' => Serviço econômico indisponível para o trecho.
+              'company' => [
+                      'id' => 1
+                      'name' => Correios
+                      'picture' => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
+                  ]
+                ],
+             [
+                    'id' => 2
+                    'name' => SEDEX
+                    'price' => 18.08
+                    'custom_price' => 18.08
+                    'discount' => 9.12
+                    'currency' => R$
+                    'delivery_time' => 2
+                    'delivery_range' => [
+                            'min' => 1
+                            'max' => 2
                         ]
-
-                ]
-            [1] => [
-                    [id] => 2
-                    [name] => SEDEX
-                    [price] => 18.08
-                    [custom_price] => 18.08
-                    [discount] => 9.12
-                    [currency] => R$
-                    [delivery_time] => 2
-                    [delivery_range] => [
-                            [min] => 1
-                            [max] => 2
+                    'custom_delivery_time' => 2
+                    'custom_delivery_range' => [
+                            'min' => 1
+                            'max' => 2
                         ]
-                    [custom_delivery_time] => 2
-                    [custom_delivery_range] => [
-                            [min] => 1
-                            [max] => 2
-                        ]
-                    [packages] => [
-                            [0] => [
-                                    [price] => 18.08
-                                    [discount] => 9.12
-                                    [format] => box
-                                    [dimensions] => [
-                                            [height] => 11
-                                            [width] => 11
-                                            [length] => 17
-                                        ]
-
-                                    [weight] => 3.00
-                                    [insurance_value] => 10.10
-                                    [products] => [
-                                            [0] => [
-                                                    [id] => x
-                                                    [quantity] => 1
-                                                ]
-
-                                        ]
-
+                    'packages' => [
+                          [
+                            'price' => 18.08
+                            'discount' => 9.12
+                            'format' => box
+                            'dimensions' => [
+                                    'height' => 11
+                                    'width' => 11
+                                    'length' => 17
                                 ]
-
+                            'weight' => 3.00
+                            'insurance_value' => 10.10
+                            'products' => [
+                                    [
+                                      'id' => x
+                                      'quantity' => 1
+                                    ]
+                                ]
+                         ]
+                      ],
+                    'additional_services' => [
+                            'receipt' => 
+                            'own_hand' => 
+                            'collect' => 
                         ]
-                    [additional_services] => [
-                            [receipt] => 
-                            [own_hand] => 
-                            [collect] => 
+                    'company' => [
+                          'id' => 1
+                          'name' => Correios
+                          'picture' => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
                         ]
-                    [company] => [
-                            [id] => 1
-                            [name] => Correios
-                            [picture] => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
-                        ]
-
-                ] 
-        [...]
+                ]
+            ...... 
     ]
 ]
 ```
 
-## Calculando por Pacote
+### Por Pacotes
+- É possível realizar o cálculo por pacotes adicionando a o campo isProduct como false
+
 ```php
+use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ToData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FromData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\PackageCollection;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Package;
+
 $melhorEnvioService = new MelhorEnvioService(
     accessToken: "xxxxxx.yyyyyyy.zzzzzz",
     userAgent: "name project (email vinculed)",
-            //isSandBox: true (Optional)
+    //isSandBox: true (Optional)
 );
 
 $freightCalculationResponse = $melhorEnvioService->freightCalculate(
     new InputData(
-        new ToData(postalCode: "60820050"),
+        new ToData(postalCode: "60876590"),
         new FromData(postalCode: "60820050"),
         package: new PackageCollection(
             [
@@ -160,125 +170,128 @@ Saída
 
 ```
 [
-    [deliveryDetails] => [
-            [0] => [
-                    [id] => 1
-                    [name] => PAC
-                    [error] => Serviço econômico indisponível para o trecho.
-                    [company] => [
-                            [id] => 1
-                            [name] => Correios
-                            [picture] => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
+    'deliveryDetails' => [
+            [
+              'id' => 1
+              'name' => PAC
+              'error' => Serviço econômico indisponível para o trecho.
+              'company' => [
+                      'id' => 1
+                      'name' => Correios
+                      'picture' => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
+                  ]
+                ],
+             [
+                    'id' => 2
+                    'name' => SEDEX
+                    'price' => 18.08
+                    'custom_price' => 18.08
+                    'discount' => 9.12
+                    'currency' => R$
+                    'delivery_time' => 2
+                    'delivery_range' => [
+                            'min' => 1
+                            'max' => 2
                         ]
-
-                ]
-            [1] => [
-                    [id] => 2
-                    [name] => SEDEX
-                    [price] => 18.08
-                    [custom_price] => 18.08
-                    [discount] => 9.12
-                    [currency] => R$
-                    [delivery_time] => 2
-                    [delivery_range] => [
-                            [min] => 1
-                            [max] => 2
+                    'custom_delivery_time' => 2
+                    'custom_delivery_range' => [
+                            'min' => 1
+                            'max' => 2
                         ]
-                    [custom_delivery_time] => 2
-                    [custom_delivery_range] => [
-                            [min] => 1
-                            [max] => 2
-                        ]
-                    [packages] => [
-                            [0] => [
-                                    [price] => 18.08
-                                    [discount] => 9.12
-                                    [format] => box
-                                    [dimensions] => [
-                                            [height] => 11
-                                            [width] => 11
-                                            [length] => 17
-                                        ]
-
-                                    [weight] => 3.00
-                                    [insurance_value] => 10.10
-                                    [products] => [
-                                            [0] => [
-                                                    [id] => x
-                                                    [quantity] => 1
-                                                ]
-
-                                        ]
-
+                    'packages' => [
+                          [
+                            'price' => 18.08
+                            'discount' => 9.12
+                            'format' => box
+                            'dimensions' => [
+                                    'height' => 11
+                                    'width' => 11
+                                    'length' => 17
                                 ]
-
+                            'weight' => 3.00
+                            'insurance_value' => 10.10
+                            'products' => [
+                                    [
+                                      'id' => x
+                                      'quantity' => 1
+                                    ]
+                                ]
+                         ]
+                      ],
+                    'additional_services' => [
+                            'receipt' => 
+                            'own_hand' => 
+                            'collect' => 
                         ]
-                    [additional_services] => [
-                            [receipt] => 
-                            [own_hand] => 
-                            [collect] => 
+                    'company' => [
+                          'id' => 1
+                          'name' => Correios
+                          'picture' => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
                         ]
-                    [company] => [
-                            [id] => 1
-                            [name] => Correios
-                            [picture] => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
-                        ]
-
-                ] 
-        [...]
+                ]
+            ...... 
     ]
 ]
 ```
 
-### Inserindo Fretes no Carrinho
+### Inserção de itens ao carrinho
 
-os campos companyDocument e document se referem ao CNPJ e/ou CPF, caso a flag isDocument for habilitada 
-o campo CPF será obrigatório, caso contrário o campo CNPJ será obrigatório
-
+- Antes de prosseguir, você deverá inserir á um carrinho de compras os produtos que serão enviados.
+  
 ```php
+use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ToData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\FromData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ProductCollection;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Products;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\VolumeCollection;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volume;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OptionsData;
+
 $addShippingToCart = new AddShippingToCart(
-accessToken: "xxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxx.xxxxxxxx",
-userAgent: "name project (email vinculed)",
-//isSandBox: true (Optional)
+  accessToken: "xxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxx.xxxxxxxx",
+  userAgent: "name project (email vinculed)",
+  //isSandBox: true (Optional)
 );
-$addShippingToCartResponse = $addShippingToCart->add(new AddShippingToCartInputData(
-            service: 2,
-            from: new FromData(
-                name: self::$faker->name(),
-                companyDocument: "93.472.569/0001-30",
-                address: "Jardim sem Oliveiras",
-                city: "Cidade dos Empregados",
-                postalCode:"08552070"
-            ),
-            to: new ToData(
-                name: self::$faker->name(),
-                document: "21540911055",
-                address: "Jardim das Oliveiras",
-                city: "Cidade 2000",
-                postalCode:"60820050",
-                isDocument: true
-            ),
-            products: new ProductCollection(
-                [
-                    new Products(
+$addShippingToCartResponse = $addShippingToCart->add(new InputData(
+        service: 2,
+        from: new FromData(
+            name: self::$faker->name(),
+            companyDocument: "93.472.569/0001-30",
+            address: "Jardim sem Oliveiras",
+            city: "Cidade dos Empregados",
+            postalCode:"08552070" // Considera-se apenas números.
+        ),
+        to: new ToData(
+            name: self::$faker->name(),
+            document: "21540911055",
+            address: "Jardim das Oliveiras",
+            city: "Cidade 2000",
+            postalCode:"60820050",
+            isPf: true // Caso verdadeiro deverá ser informado para o atributo document um CPF válido, caso contrário será considerado um CNPJ válido
+        ),
+        products: new ProductCollection(
+            [
+                new Product(
                     name: 'perfume'
-                    )
-                ]
-            ),
-            volumes: new VolumeCollection(
-                [
-                new Volumes(
+                )
+            ]
+        ),
+        volumes: new VolumeCollection(
+            [
+                new Volume(
                     height: 43,
                     width: 60,
                     length: 70,
                     weight: 30
                 )
-                ]
-            ),
-            options:new OptionsData(
-                insuranceValue: 50.00,
-            )
-        ));
+            ]
+        ),
+        options:new OptionsData(
+            insuranceValue: 50.00,
+        )
+    ));
 
 print_r($addShippingToCartResponse);
 ```
@@ -287,106 +300,37 @@ Saída
 
 ```
 [
-    [id] => 9af54411-a4c1-4e64-9ccd-06959f59b984
-    [protocol] => ORD-202312198407
-    [serviceId] => 2
-    [price] => 615.76
-    [deliveryMin] => 4
-    [deliveryMax] => 5
-    [status] => pending
-    [payloadDetails] => [
-            [id] => 9af54411-a4c1-4e64-9ccd-06959f59b984
-            [protocol] => ORD-202312198407
-            [service_id] => 2
-            [agency_id] => 
-            [contract] => 
-            [service_code] => 
-            [quote] => 615.76
-            [price] => 615.76
-            [coupon] => 
-            [discount] => 107.05
-            [delivery_min] => 4
-            [delivery_max] => 5
-            [status] => pending
-            [reminder] => 
-            [insurance_value] => 50
-            [weight] => 
-            [width] => 
-            [height] => 
-            [length] => 
-            [diameter] => 
-            [format] => box
-            [billed_weight] => 30.1
-            [receipt] => 
-            [own_hand] => 
-            [collect] => 
-            [collect_scheduled_at] => 
-            [reverse] => 0
-            [non_commercial] => 1
-            [authorization_code] => 
-            [tracking] => 
-            [self_tracking] => 
-            [delivery_receipt] => 
-            [additional_info] => 
-            [cte_key] => 
-            [paid_at] => 
-            [generated_at] => 
-            [posted_at] => 
-            [delivered_at] => 
-            [canceled_at] => 
-            [suspended_at] => 
-            [expired_at] => 
-            [created_at] => 2023-12-28 16:46:36
-            [updated_at] => 2023-12-28 16:46:36
-            [parse_pi_at] => 
-            [user] => [
-                    [id] => 9ad5adfb-bc45-4cce-a1a2-ec8e42b743a2
-                    [protocol] => USR-2023128218
-                    [firstname] => pietro
-                    [lastname] => coelho
-                    [email] => coelhopietro17@gmail.com
-                    [picture] => 
-                    [thumbnail] => 
-                    [document] => 07875655390
-                    [birthdate] => 2000-07-25T00:00:00.000000Z
-                    [email_confirmed_at] => 2023-12-12T23:56:16.000000Z
-                    [email_alternative] => 
-                    [imported] => 0
-                    [access_at] => 2023-12-21T16:55:26.000000Z
-                    [created_at] => 2023-12-12T23:56:16.000000Z
-                    [updated_at] => 2023-12-12T23:57:12.000000Z
-                    [app_id] => 1
-                ]
-            [products] => [
-                ]
-
-            [volumes] => [
-                    [0] => [
-                            [id] => 203204
-                            [height] => 43.00
-                            [width] => 60.00
-                            [length] => 70.00
-                            [diameter] => 0.00
-                            [weight] => 30.00
-                            [format] => box
-                            [created_at] => 2023-12-28 16:46:36
-                            [updated_at] => 2023-12-28 16:46:36
-                        ]
-
-                ]
-
+    'id' => 9af54411-a4c1-4e64-9ccd-06959f59b984
+    'protocol' => ORD-202312198407
+    'serviceId' => 2
+    'price' => 615.76
+    'deliveryMin' => 4
+    'deliveryMax' => 5
+    'status' => pending
+    'payloadDetails' => [
+            'id' => 9af54411-a4c1-4e64-9ccd-06959f59b984
+            'protocol' => ORD-202312198407
+            'service_id' => 2
+            'agency_id' => 
+            .......
         ]
-
 ]
 ```
 
 ### Compra de Fretes
+- Depois de inserido o pedido no carrinho, será necessário realizar a compra do frete.
+- Para esta ação é requisitado o id do pedido, à partir dessa informação será possivel realizar a compra.
 
 ```php
+use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OrderCollection;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\Order;
+
 $melhorEnvioService = new MelhorEnvioService(
     accessToken: "xxxxxx.yyyyyyy.zzzzzz",
     userAgent: "name project (email vinculed)",
-            //isSandBox: true (Optional)
+    //isSandBox: true (Optional)
 );
 
 $checkoutLabelResponse = $melhorEnvioService->checkoutLabel(
@@ -405,449 +349,94 @@ Saída
 
 ```
 [
-    [purchase] =>
-        [
-            [id] => 9af54936-6611-4152-a4dc-8cba23127b2e
-            [protocol] => PUR-20231235457
-            [total] => 615.76
-            [discount] => 107.05
-            [status] => paid
-            [paid_at] => 2023-12-28 17:00:59
-            [canceled_at] => 
-            [created_at] => 2023-12-28 17:00:59
-            [updated_at] => 2023-12-28 17:00:59
-            [payment] => 
-            [transactions] =>
+    'purchase' =>
+    [
+        'id' => 9af54936-6611-4152-a4dc-8cba23127b2e
+        'protocol' => PUR-20231235457
+        'total' => 615.76
+        'discount' => 107.05
+        'status' => paid
+        'paid_at' => 2023-12-28 17:00:59
+        'canceled_at' => 
+        'created_at' => 2023-12-28 17:00:59
+        'updated_at' => 2023-12-28 17:00:59
+        'payment' => 
+            'transactions' =>
                 [
-                    [0] =>
-                        [
-                            [id] => 9af54936-6d78-4215-87b0-19f7581056ec
-                            [protocol] => TRN-20231275008
-                            [value] => 615.76
-                            [type] => debit
-                            [status] => authorized
-                            [description] => Pagamento de envios (PUR-20231235457)
-                            [authorized_at] => 2023-12-28 17:00:59
-                            [unauthorized_at] => 
-                            [reserved_at] => 
-                            [canceled_at] => 
-                            [created_at] => 2023-12-28 17:00:59
-                            [description_internal] => 
-                            [reason] =>
-                                [
-                                    [id] => 7
-                                    [label] => Pagamento de envios
-                                    [description] => 
-                                ]
-                        ]
+                    [
+                    'id' => 9af54936-6d78-4215-87b0-19f7581056ec
+                    'protocol' => TRN-20231275008
+                    'value' => 615.76
+                    'type' => debit
+                    'status' => authorized
+                    'description' => Pagamento de envios (PUR-20231235457)
+                    'authorized_at' => 2023-12-28 17:00:59
+                    'unauthorized_at' => 
+                    'reserved_at' => 
+                    'canceled_at' => 
+                    'created_at' => 2023-12-28 17:00:59
+                    'description_internal' => 
+                    'reason' => [
+                                'id' => 7
+                                'label' => Pagamento de envios
+                                'description' => 
+                            ]
+                    ]
                 ]
-            [orders] =>
-                [
-                    [0] =>
-                        [
-                            [id] => 9af54411-a4c1-4e64-9ccd-06959f59b984
-                            [protocol] => ORD-202312198407
-                            [service_id] => 2
-                            [agency_id] => 
-                            [contract] => 
-                            [service_code] => 
-                            [quote] => 615.76
-                            [price] => 615.76
-                            [coupon] => 
-                            [discount] => 107.05
-                            [delivery_min] => 4
-                            [delivery_max] => 5
-                            [status] => released
-                            [reminder] => 
-                            [insurance_value] => 50
-                            [weight] => 
-                            [width] => 
-                            [height] => 
-                            [length] => 
-                            [diameter] => 
-                            [format] => box
-                            [billed_weight] => 30.1
-                            [receipt] => 
-                            [own_hand] => 
-                            [collect] => 
-                            [collect_scheduled_at] => 
-                            [reverse] => 0
-                            [non_commercial] => 1
-                            [authorization_code] => 
-                            [tracking] => 
-                            [self_tracking] => 
-                            [delivery_receipt] => 
-                            [additional_info] => 
-                            [cte_key] => 
-                            [paid_at] => 2023-12-28 17:00:59
-                            [generated_at] => 
-                            [posted_at] => 
-                            [delivered_at] => 
-                            [canceled_at] => 
-                            [suspended_at] => 
-                            [expired_at] => 
-                            [created_at] => 2023-12-28 16:46:36
-                            [updated_at] => 2023-12-28 17:00:59
-                            [parse_pi_at] => 
-                            [from] =>
-                                [
-                                    [name] => Joana
-                                    [phone] => 
-                                    [email] => coelhopietro17@gmail.com
-                                    [document] => 
-                                    [company_document] => 93472569000130
-                                    [state_register] => 
-                                    [postal_code] => 8552070
-                                    [address] => Conjunto Ceará
-                                    [location_number] => 
-                                    [complement] => 
-                                    [district] => 
-                                    [city] => Cidade 2000
-                                    [state_abbr] => SP
-                                    [country_id] => BR
-                                    [latitude] => 
-                                    [longitude] => 
-                                    [note] => 
-                                    [economic_activity_code] => 
-                                ]
-                            [to] =>
-                                [
-                                    [name] => Larissa
-                                    [phone] => 
-                                    [email] => 
-                                    [document] => 21540911055
-                                    [company_document] => 
-                                    [state_register] => 
-                                    [postal_code] => 60820050
-                                    [address] => Jardim das Oliveiras
-                                    [location_number] => 
-                                    [complement] => 
-                                    [district] => 
-                                    [city] => Cidade 2000
-                                    [state_abbr] => CE
-                                    [country_id] => BR
-                                    [latitude] => 
-                                    [longitude] => 
-                                    [note] => 
-                                    [economic_activity_code] => 
-                                ]
-                            [service] =>
-                                [
-                                    [id] => 2
-                                    [name] => SEDEX
-                                    [status] => available
-                                    [type] => express
-                                    [range] => interstate
-                                    [restrictions] => {"insurance_value":{"min":0,"max":10000,"max_dec":1000},"formats":{"box":{"weight":{"min":0.001,"max":30},"width":{"min":11,"max":100},"height":{"min":2,"max":100},"length":{"min":16,"max":100},"sum":200},"roll":{"weight":{"min":0.001,"max":30},"diameter":{"min":5,"max":91},"length":{"min":18,"max":100},"sum":200},"letter":{"weight":{"min":0.001,"max":0.5},"width":{"min":11,"max":60},"length":{"min":16,"max":60}}}}
-                                    [requirements] => ["names","addresses","documents"]
-                                    [optionals] => ["AR","MP","VD"]
-                                    [company] =>
-                                        [
-                                            [id] => 1
-                                            [name] => Correios
-                                            [has_grouped_volumes] => 0
-                                            [status] => available
-                                            [picture] => /images/shipping-companies/correios.png
-                                            [tracking_link] => https://www.melhorrastreio.com.br/rastreio/
-                                            [use_own_contract] => 
-                                            [batch_size] => 1
-                                        ]
-
-                                ]
-                            [agency] => 
-                            [invoice] => 
-                            [tags] =>
-                                [
-                                ]
-                            [products] =>
-                                [
-                                ]
-                        ]
-                ]
+            ......
         ]
-    [payloadDetails] =>
-        [
-            [purchase] =>
-                [
-                    [id] => 9af54936-6611-4152-a4dc-8cba23127b2e
-                    [protocol] => PUR-20231235457
-                    [total] => 615.76
-                    [discount] => 107.05
-                    [status] => paid
-                    [paid_at] => 2023-12-28 17:00:59
-                    [canceled_at] => 
-                    [created_at] => 2023-12-28 17:00:59
-                    [updated_at] => 2023-12-28 17:00:59
-                    [payment] => 
-                    [transactions] =>
+'payloadDetails' =>
+    [
+        'purchase' =>
+            [
+                'id' => 9af54936-6611-4152-a4dc-8cba23127b2e
+                'protocol' => PUR-20231235457
+                'total' => 615.76
+                'discount' => 107.05
+                'status' => paid
+                'paid_at' => 2023-12-28 17:00:59
+                'canceled_at' => 
+                'created_at' => 2023-12-28 17:00:59
+                'updated_at' => 2023-12-28 17:00:59
+                'payment' => 
+                'transactions' =>
+                    [
                         [
-                            [0] =>
-                                [
-                                    [id] => 9af54936-6d78-4215-87b0-19f7581056ec
-                                    [protocol] => TRN-20231275008
-                                    [value] => 615.76
-                                    [type] => debit
-                                    [status] => authorized
-                                    [description] => Pagamento de envios (PUR-20231235457)
-                                    [authorized_at] => 2023-12-28 17:00:59
-                                    [unauthorized_at] => 
-                                    [reserved_at] => 
-                                    [canceled_at] => 
-                                    [created_at] => 2023-12-28 17:00:59
-                                    [description_internal] => 
-                                    [reason] =>
+                            'id' => 9af54936-6d78-4215-87b0-19f7581056ec
+                            'protocol' => TRN-20231275008
+                            'value' => 615.76
+                            'type' => debit
+                            'status' => authorized
+                            'description' => Pagamento de envios (PUR-20231235457)
+                            'authorized_at' => 2023-12-28 17:00:59
+                            'unauthorized_at' => 
+                            'reserved_at' => 
+                            'canceled_at' => 
+                            'created_at' => 2023-12-28 17:00:59
+                            'description_internal' => 
+                            'reason' =>
                                         [
-                                            [id] => 7
-                                            [label] => Pagamento de envios
-                                            [description] => 
+                                            'id' => 7
+                                            'label' => Pagamento de envios
+                                            'description' => 
                                         ]
-                                ]
                         ]
-                    [orders] =>
-                        [
-                            [0] =>
-                                [
-                                    [id] => 9af54411-a4c1-4e64-9ccd-06959f59b984
-                                    [protocol] => ORD-202312198407
-                                    [service_id] => 2
-                                    [agency_id] => 
-                                    [contract] => 
-                                    [service_code] => 
-                                    [quote] => 615.76
-                                    [price] => 615.76
-                                    [coupon] => 
-                                    [discount] => 107.05
-                                    [delivery_min] => 4
-                                    [delivery_max] => 5
-                                    [status] => released
-                                    [reminder] => 
-                                    [insurance_value] => 50
-                                    [weight] => 
-                                    [width] => 
-                                    [height] => 
-                                    [length] => 
-                                    [diameter] => 
-                                    [format] => box
-                                    [billed_weight] => 30.1
-                                    [receipt] => 
-                                    [own_hand] => 
-                                    [collect] => 
-                                    [collect_scheduled_at] => 
-                                    [reverse] => 0
-                                    [non_commercial] => 1
-                                    [authorization_code] => 
-                                    [tracking] => 
-                                    [self_tracking] => 
-                                    [delivery_receipt] => 
-                                    [additional_info] => 
-                                    [cte_key] => 
-                                    [paid_at] => 2023-12-28 17:00:59
-                                    [generated_at] => 
-                                    [posted_at] => 
-                                    [delivered_at] => 
-                                    [canceled_at] => 
-                                    [suspended_at] => 
-                                    [expired_at] => 
-                                    [created_at] => 2023-12-28 16:46:36
-                                    [updated_at] => 2023-12-28 17:00:59
-                                    [parse_pi_at] => 
-                                    [from] =>
-                                        [
-                                            [name] => Joana
-                                            [phone] => 
-                                            [email] => coelhopietro17@gmail.com
-                                            [document] => 
-                                            [company_document] => 93472569000130
-                                            [state_register] => 
-                                            [postal_code] => 8552070
-                                            [address] => Conjunto Ceará
-                                            [location_number] => 
-                                            [complement] => 
-                                            [district] => 
-                                            [city] => Cidade 2000
-                                            [state_abbr] => SP
-                                            [country_id] => BR
-                                            [latitude] => 
-                                            [longitude] => 
-                                            [note] => 
-                                            [economic_activity_code] => 
-                                        ]
-                                    [to] =>
-                                        [
-                                            [name] => Larissa
-                                            [phone] => 
-                                            [email] => 
-                                            [document] => 21540911055
-                                            [company_document] => 
-                                            [state_register] => 
-                                            [postal_code] => 60820050
-                                            [address] => Jardim das Oliveiras
-                                            [location_number] => 
-                                            [complement] => 
-                                            [district] => 
-                                            [city] => Cidade 2000
-                                            [state_abbr] => CE
-                                            [country_id] => BR
-                                            [latitude] => 
-                                            [longitude] => 
-                                            [note] => 
-                                            [economic_activity_code] => 
-                                        ]
-                                    [service] =>
-                                        [
-                                            [id] => 2
-                                            [name] => SEDEX
-                                            [status] => available
-                                            [type] => express
-                                            [range] => interstate
-                                            [restrictions] => {"insurance_value":{"min":0,"max":10000,"max_dec":1000},"formats":{"box":{"weight":{"min":0.001,"max":30},"width":{"min":11,"max":100},"height":{"min":2,"max":100},"length":{"min":16,"max":100},"sum":200},"roll":{"weight":{"min":0.001,"max":30},"diameter":{"min":5,"max":91},"length":{"min":18,"max":100},"sum":200},"letter":{"weight":{"min":0.001,"max":0.5},"width":{"min":11,"max":60},"length":{"min":16,"max":60}}}}
-                                            [requirements] => ["names","addresses","documents"]
-                                            [optionals] => ["AR","MP","VD"]
-                                            [company] =>
-                                                [
-                                                    [id] => 1
-                                                    [name] => Correios
-                                                    [has_grouped_volumes] => 0
-                                                    [status] => available
-                                                    [picture] => /images/shipping-companies/correios.png
-                                                    [tracking_link] => https://www.melhorrastreio.com.br/rastreio/
-                                                    [use_own_contract] => 
-                                                    [batch_size] => 1
-                                                ]
-
-                                        ]
-
-                                    [agency] => 
-                                    [invoice] => 
-                                    [tags] =>
-                                        [
-                                        ]
-
-                                    [products] =>
-                                        [
-                                        ]
-                                ]
-                        ]
-                ]
-            [conciliation_group] =>
-                [
-                    [id] => 9af54936-3e51-4ee8-9e16-ff6b585a3ecc
-                    [protocol] => CGP-20231211803
-                    [total] => 16
-                    [type] => debit
-                    [status] => paid
-                    [paid_at] => 2023-12-28 17:00:59
-                    [canceled_at] => 
-                    [created_at] => 2023-12-28 17:00:59
-                    [updated_at] => 2023-12-28 17:00:59
-                    [conciliations] =>
-                        [
-                            [0] =>
-                                [
-                                    [status] => paid
-                                    [service_code] => 
-                                    [from_postal_code] => 8552070
-                                    [from_city] => Cidade dos Empregados
-                                    [from_state_abbr] => SP
-                                    [to_postal_code] => 60820050
-                                    [to_city] => Cidade 2000
-                                    [to_state_abbr] => CE
-                                    [authorization_code] => 2023122801
-                                    [tracking] => ME2300492W0BR
-                                    [quote] => 631.76
-                                    [price] => 631.76
-                                    [discount] => 123.05
-                                    [value] => 16
-                                    [type] => debit
-                                    [insurance_value] => 50
-                                    [weight] => 
-                                    [width] => 
-                                    [height] => 
-                                    [length] => 
-                                    [diameter] => 
-                                    [format] => box
-                                    [billed_weight] => 30.1
-                                    [receipt] => 
-                                    [own_hand] => 
-                                    [collect] => 
-                                    [distinct_metrics] => 1
-                                    [paid_at] => 2023-12-28 17:00:59
-                                    [canceled_at] => 
-                                    [created_at] => 2023-12-28 01:45:13
-                                    [updated_at] => 2023-12-28 17:00:59
-                                    [rate] => 
-                                    [user] =>
-                                        [
-                                            [id] => 9ad5adfb-bc45-4cce-a1a2-ec8e42b743a2
-                                            [protocol] => USR-2023128218
-                                            [firstname] => pietro
-                                            [lastname] => coelho
-                                            [email] => coelhopietro17@gmail.com
-                                            [picture] => 
-                                            [thumbnail] => 
-                                            [document] => 07875655390
-                                            [birthdate] => 2000-07-25T00:00:00.000000Z
-                                            [email_confirmed_at] => 2023-12-12T23:56:16.000000Z
-                                            [email_alternative] => 
-                                            [imported] => 0
-                                            [access_at] => 2023-12-21T16:55:26.000000Z
-                                            [created_at] => 2023-12-12T23:56:16.000000Z
-                                            [updated_at] => 2023-12-12T23:57:12.000000Z
-                                            [app_id] => 1
-                                        ]
-                                    [group] =>
-                                        [
-                                            [id] => 9af54936-3e51-4ee8-9e16-ff6b585a3ecc
-                                            [protocol] => CGP-20231211803
-                                            [total] => 16
-                                            [type] => debit
-                                            [status] => paid
-                                            [paid_at] => 2023-12-28 17:00:59
-                                            [canceled_at] => 
-                                            [created_at] => 2023-12-28 17:00:59
-                                            [updated_at] => 2023-12-28 17:00:59
-                                        ]
-                                    [agency] => 
-                                ]
-                        ]
-                    [transactions] =>
-                        [
-                            [0] =>
-                                [
-                                    [id] => 9af54936-40ac-4015-badb-dc9442b569ec
-                                    [protocol] => TRN-20231275007
-                                    [value] => 16
-                                    [type] => debit
-                                    [status] => authorized
-                                    [description] => Pagamento de pendências via conferência de postagens (CGP-20231211803]
-                                    [authorized_at] => 2023-12-28 17:00:59
-                                    [unauthorized_at] => 
-                                    [reserved_at] => 
-                                    [canceled_at] => 
-                                    [created_at] => 2023-12-28 17:00:59
-                                    [description_internal] => 
-                                    [reason] =>
-                                        [
-                                            [id] => 8
-                                            [label] => Pagamento de pendência via conferência de postagens
-                                            [description] => 
-                                        ]
-                                ]
-                        ]
-                    [payment] => 
-                ]
-            [digitable] => 
-            [redirect] => 
-            [message] => 
-            [token] => 
-            [payment_id] => 
-        ]
+                    ]
+            ]
+    ]
 ]
 ```
 
 ### Geração de Etiquetas
 
+- Feita compra do seu frete, será possivel gerar a etiqueta, utilizando o mesmo id do pedido.
+
 ```php
+use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OrderCollection;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\Order;
+
 $melhorEnvioService = new MelhorEnvioService(
     accessToken: "xxxxxx.yyyyyyy.zzzzzz",
     userAgent: "name project (email vinculed)",
@@ -856,7 +445,9 @@ $melhorEnvioService = new MelhorEnvioService(
 
         $generateLabelResponse = $melhorEnvioService->generateLabel(new InputData(
         orders:new OrderCollection(
-            [new Order(key: "9af54411-a4c1-4e64-9ccd-06959f59b984")]
+            [new Order(
+            key: "9af54411-a4c1-4e64-9ccd-06959f59b984"
+            )]
         )
     )
 );
@@ -867,10 +458,10 @@ Saída
 
 ```
 [
-    [details] => [
-            [9af54411-a4c1-4e64-9ccd-06959f59b984] => [
-                    [status] => 1
-                    [message] => Envio gerado com sucesso
+    'details' => [
+            '9af54411-a4c1-4e64-9ccd-06959f59b984' => [
+                    'status' => 1
+                    'message' => Envio gerado com sucesso
                 ]
         ]
 ]
