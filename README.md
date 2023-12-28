@@ -1,7 +1,16 @@
 # Melhor Envio SDK para PHP
 
-Este é um repositório que possui uma abstração a API do Melhor Envio, facilitando a COTAÇÃO DE FRETE e ADIÇÃO DE PEDIDOS
+Bem-vindo ao SDK do Melhor Envio! Nossa ferramenta oferece uma integração poderosa e simplificada para otimizar e facilitar o processo de gestão de envios.
+Com funcionalidades intuitivas, nosso SDK permite acesso direto às soluções como cotação de frete, criação de pedidos, compra de frete e geração de etiquetas 
+,tudo isso em um ambiente flexível e de fácil implementação. Agilize suas operações e proporcione uma experiência de envio excepcional aos seus clientes com o nosso SDK do Melhor Envio. 
 
+
+## Indíce
+1. [Instalação](#instalação)
+2. [Cotações de Frete](#cotações-de-frete)
+3. [Inserção de Items no carrinho](#inserção-de-itens-ao-carrinho)
+4. [Geração de Etiquetas](#geração-de-etiquetas)
+5. [Exemplo Prático](#segue-o-exemplo-prático-do-fluxo-de-compra-de-frete-e-geração-de-etiqueta)
 
 ## Instalação
 
@@ -22,10 +31,14 @@ ou adicionar esse linha
 na seção `require` do seu arquivo `composer.json`.
 
 ## Como Usar?
+## Cotações de Frete
+As cotações de frete oferecidas pelo Melhor Envio são uma ferramenta essencial para e-commerce e envios em geral.
+Com base nas integrações com diversas transportadoras.
 
-## Cotação do Frete 
+Em nosso SDK é permitido realizar as cotações tanto por produtos, quanto por pacotes.
+
 ### Por Produtos
-- É possível realizar o cálculo de um frete por produtos individualmente, informando o peso e os demais dados abaixo
+- É possível realizar o cálculo de um frete por produtos individualmente, informando o peso e os demais dados abaixo.
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
@@ -57,7 +70,8 @@ $freightCalculationResponse = $melhorEnvioService->freightCalculate(
                 )
             ]
         )
-));
+    )
+);
 
 print_r($freightCalculationResponse);
 ```
@@ -77,52 +91,52 @@ Saída
                   ]
                 ],
              [
-                    'id' => 2
-                    'name' => SEDEX
-                    'price' => 18.08
-                    'custom_price' => 18.08
-                    'discount' => 9.12
-                    'currency' => R$
-                    'delivery_time' => 2
-                    'delivery_range' => [
-                            'min' => 1
-                            'max' => 2
-                        ]
-                    'custom_delivery_time' => 2
-                    'custom_delivery_range' => [
-                            'min' => 1
-                            'max' => 2
-                        ]
-                    'packages' => [
-                          [
-                            'price' => 18.08
-                            'discount' => 9.12
-                            'format' => box
-                            'dimensions' => [
-                                    'height' => 11
-                                    'width' => 11
-                                    'length' => 17
+                'id' => 2
+                'name' => SEDEX
+                'price' => 18.08
+                'custom_price' => 18.08
+                'discount' => 9.12
+                'currency' => R$
+                'delivery_time' => 2
+                'delivery_range' => [
+                        'min' => 1
+                        'max' => 2
+                    ]
+                'custom_delivery_time' => 2
+                'custom_delivery_range' => [
+                        'min' => 1
+                        'max' => 2
+                    ]
+                'packages' => [
+                      [
+                        'price' => 18.08
+                        'discount' => 9.12
+                        'format' => box
+                        'dimensions' => [
+                                'height' => 11
+                                'width' => 11
+                                'length' => 17
+                            ]
+                        'weight' => 3.00
+                        'insurance_value' => 10.10
+                        'products' => [
+                                [
+                                  'id' => x
+                                  'quantity' => 1
                                 ]
-                            'weight' => 3.00
-                            'insurance_value' => 10.10
-                            'products' => [
-                                    [
-                                      'id' => x
-                                      'quantity' => 1
-                                    ]
-                                ]
-                         ]
-                      ],
-                    'additional_services' => [
-                            'receipt' => 
-                            'own_hand' => 
-                            'collect' => 
-                        ]
-                    'company' => [
-                          'id' => 1
-                          'name' => Correios
-                          'picture' => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
-                        ]
+                            ]
+                     ]
+                  ],
+                'additional_services' => [
+                        'receipt' => 
+                        'own_hand' => 
+                        'collect' => 
+                    ]
+                'company' => [
+                      'id' => 1
+                      'name' => Correios
+                      'picture' => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
+                    ]
                 ]
             ...... 
     ]
@@ -130,7 +144,7 @@ Saída
 ```
 
 ### Por Pacotes
-- É possível realizar o cálculo por pacotes adicionando a o campo isProduct como false
+- É possível realizar o cálculo por pacotes, seguindo o modelo abaixo:
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
@@ -161,7 +175,8 @@ $freightCalculationResponse = $melhorEnvioService->freightCalculate(
             ]
         ),
         isProduct: false
-));
+    )
+);
 
 print_r($freightCalculationResponse);
 ```
@@ -182,52 +197,52 @@ Saída
                   ]
                 ],
              [
-                    'id' => 2
-                    'name' => SEDEX
-                    'price' => 18.08
-                    'custom_price' => 18.08
-                    'discount' => 9.12
-                    'currency' => R$
-                    'delivery_time' => 2
-                    'delivery_range' => [
-                            'min' => 1
-                            'max' => 2
-                        ]
-                    'custom_delivery_time' => 2
-                    'custom_delivery_range' => [
-                            'min' => 1
-                            'max' => 2
-                        ]
-                    'packages' => [
-                          [
-                            'price' => 18.08
-                            'discount' => 9.12
-                            'format' => box
-                            'dimensions' => [
-                                    'height' => 11
-                                    'width' => 11
-                                    'length' => 17
+                'id' => 2
+                'name' => SEDEX
+                'price' => 18.08
+                'custom_price' => 18.08
+                'discount' => 9.12
+                'currency' => R$
+                'delivery_time' => 2
+                'delivery_range' => [
+                        'min' => 1
+                        'max' => 2
+                    ]
+                'custom_delivery_time' => 2
+                'custom_delivery_range' => [
+                        'min' => 1
+                        'max' => 2
+                    ]
+                'packages' => [
+                      [
+                        'price' => 18.08
+                        'discount' => 9.12
+                        'format' => box
+                        'dimensions' => [
+                                'height' => 11
+                                'width' => 11
+                                'length' => 17
+                            ]
+                        'weight' => 3.00
+                        'insurance_value' => 10.10
+                        'products' => [
+                                [
+                                  'id' => x
+                                  'quantity' => 1
                                 ]
-                            'weight' => 3.00
-                            'insurance_value' => 10.10
-                            'products' => [
-                                    [
-                                      'id' => x
-                                      'quantity' => 1
-                                    ]
-                                ]
-                         ]
-                      ],
-                    'additional_services' => [
-                            'receipt' => 
-                            'own_hand' => 
-                            'collect' => 
-                        ]
-                    'company' => [
-                          'id' => 1
-                          'name' => Correios
-                          'picture' => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
-                        ]
+                            ]
+                     ]
+                  ],
+                'additional_services' => [
+                        'receipt' => 
+                        'own_hand' => 
+                        'collect' => 
+                    ]
+                'company' => [
+                      'id' => 1
+                      'name' => Correios
+                      'picture' => https://sandbox.melhorenvio.com.br/images/shipping-companies/correios.png
+                    ]
                 ]
             ...... 
     ]
@@ -236,7 +251,13 @@ Saída
 
 ### Inserção de itens ao carrinho
 
-- Antes de prosseguir, você deverá inserir á um carrinho de compras os produtos que serão enviados.
+Nosso SDK permite aos usuários reunir e organizar os produtos a serem enviados em um único local. 
+
+Através de integrações simples e intuitivas, é possível adicionar itens ao carrinho, detalhando informações como peso, 
+dimensões e valor declarado. 
+Isso proporciona uma visão abrangente dos envios planejados, facilitando a compra de fretes, a geração de etiquetas  tudo em um só lugar.
+
+Antes de prosseguir, você deverá inserir á um carrinho de compras os produtos que serão enviados.
   
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
@@ -249,12 +270,13 @@ use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\VolumeCollection;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volume;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OptionsData;
 
-$addShippingToCart = new AddShippingToCart(
-  accessToken: "xxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxx.xxxxxxxx",
-  userAgent: "name project (email vinculed)",
-  //isSandBox: true (Optional)
+$melhorEnvioService = new MelhorEnvioService(
+    accessToken: "xxxxxx.yyyyyyy.zzzzzz",
+    userAgent: "name project (email vinculed)",
+    //isSandBox: true (Optional)
 );
-$addShippingToCartResponse = $addShippingToCart->add(new InputData(
+
+$addShippingToCartResponse = $melhorEnvioService->add(new InputData(
         service: 2,
         from: new FromData(
             name: self::$faker->name(),
@@ -291,7 +313,8 @@ $addShippingToCartResponse = $addShippingToCart->add(new InputData(
         options:new OptionsData(
             insuranceValue: 50.00,
         )
-    ));
+    )
+);
 
 print_r($addShippingToCartResponse);
 ```
@@ -312,14 +335,18 @@ Saída
             'protocol' => ORD-202312198407
             'service_id' => 2
             'agency_id' => 
-            .......
+            
         ]
 ]
 ```
 
 ### Compra de Fretes
-- Depois de inserido o pedido no carrinho, será necessário realizar a compra do frete.
-- Para esta ação é requisitado o id do pedido, à partir dessa informação será possivel realizar a compra.
+A compra de fretes é um processo simplificado e eficiente para os usuários que desejam enviar suas encomendas.
+
+Após selecionar a melhor opção de frete com base nas cotações disponíveis, é possivel realizar a compra direta dos serviços de transporte de diversas transportadoras parceiras. 
+
+
+Para esta ação é requisitado o id do pedido, à partir dessa informação será possivel realizar a compra.
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
@@ -336,12 +363,14 @@ $melhorEnvioService = new MelhorEnvioService(
 $checkoutLabelResponse = $melhorEnvioService->checkoutLabel(
     new InputData(
         orders: new OrderCollection(
-            [new Order(
-                key: '9af3f99a-301e-4239-9c3d-7cb7e7bb3825'
-            )
+            [
+                new Order(
+                    key: '9af3f99a-301e-4239-9c3d-7cb7e7bb3825'
+                )
             ]
         )
-    ));
+    )
+);
 
 print_r($checkoutLabelResponse);
 ```
@@ -387,8 +416,7 @@ Saída
         ]
 'payloadDetails' =>
     [
-        'purchase' =>
-            [
+        'purchase' => [
                 'id' => 9af54936-6611-4152-a4dc-8cba23127b2e
                 'protocol' => PUR-20231235457
                 'total' => 615.76
@@ -399,37 +427,38 @@ Saída
                 'created_at' => 2023-12-28 17:00:59
                 'updated_at' => 2023-12-28 17:00:59
                 'payment' => 
-                'transactions' =>
-                    [
-                        [
-                            'id' => 9af54936-6d78-4215-87b0-19f7581056ec
-                            'protocol' => TRN-20231275008
-                            'value' => 615.76
-                            'type' => debit
-                            'status' => authorized
-                            'description' => Pagamento de envios (PUR-20231235457)
-                            'authorized_at' => 2023-12-28 17:00:59
-                            'unauthorized_at' => 
-                            'reserved_at' => 
-                            'canceled_at' => 
-                            'created_at' => 2023-12-28 17:00:59
-                            'description_internal' => 
-                            'reason' =>
-                                        [
-                                            'id' => 7
-                                            'label' => Pagamento de envios
-                                            'description' => 
-                                        ]
-                        ]
-                    ]
-            ]
+                'transactions' => [
+                                   [
+                                    'id' => 9af54936-6d78-4215-87b0-19f7581056ec
+                                    'protocol' => TRN-20231275008
+                                    'value' => 615.76
+                                    'type' => debit
+                                    'status' => authorized
+                                    'description' => Pagamento de envios (PUR-20231235457)
+                                    'authorized_at' => 2023-12-28 17:00:59
+                                    'unauthorized_at' => 
+                                    'reserved_at' => 
+                                    'canceled_at' => 
+                                    'created_at' => 2023-12-28 17:00:59
+                                    'description_internal' => 
+                                    'reason' => [
+                                                    'id' => 7
+                                                    'label' => Pagamento de envios
+                                                    'description' => 
+                                                ]
+                                    ]
+                                   ]
+                     ]
     ]
 ]
 ```
 
 ### Geração de Etiquetas
+A geração de etiquetas no Melhor Envio é uma etapa crucial e conveniente no processo de envio de pacotes. 
 
-- Feita compra do seu frete, será possivel gerar a etiqueta, utilizando o mesmo id do pedido.
+Após a escolha da opção de frete desejada e a compra do serviço, nosso SDK possibilita a criação rápida e simples de etiquetas de envio.
+
+Para realizar essa ação será necessário o id do pedido.
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
@@ -440,14 +469,16 @@ use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\Order;
 $melhorEnvioService = new MelhorEnvioService(
     accessToken: "xxxxxx.yyyyyyy.zzzzzz",
     userAgent: "name project (email vinculed)",
-            //isSandBox: true (Optional)
+    //isSandBox: true (Optional)
 );
 
-        $generateLabelResponse = $melhorEnvioService->generateLabel(new InputData(
-        orders:new OrderCollection(
-            [new Order(
-            key: "9af54411-a4c1-4e64-9ccd-06959f59b984"
-            )]
+$generateLabelResponse = $melhorEnvioService->generateLabel(new InputData(
+        orders: new OrderCollection(
+            [
+                new Order(
+                    key: $addShippingToCartResponse['id']
+                )
+            ]
         )
     )
 );
@@ -465,6 +496,82 @@ Saída
                 ]
         ]
 ]
+```
+
+## Segue o exemplo prático do fluxo de compra de frete e geração de etiqueta
+
+```php
+
+
+$melhorEnvioService = new MelhorEnvioService(
+    accessToken: "xxxxxx.yyyyyyy.zzzzzz",
+    userAgent: "name project (email vinculed)",
+    isSandBox: true
+);
+
+
+$addShippingToCartResponse = $melhorEnvioService->add(new InputData(
+        service: 2,
+        from: new FromData(
+            name: self::$faker->name(),
+            companyDocument: "93.472.569/0001-30",
+            address: "Jardim sem Oliveiras",
+            city: "Cidade dos Empregados",
+            postalCode:"08552070"
+        ),
+        to: new ToData(
+            name: self::$faker->name(),
+            document: "21540911055",
+            address: "Jardim das Oliveiras",
+            city: "Cidade 2000",
+            postalCode:"60820050",
+            isPf: true
+        ),
+        products: new ProductCollection(
+            [
+                new Product(
+                    name: 'perfume'
+                )
+            ]
+        ),
+        volumes: new VolumeCollection(
+            [
+                new Volume(
+                    height: 43,
+                    width: 60,
+                    length: 70,
+                    weight: 30
+                )
+            ]
+        ),
+        options:new OptionsData(
+            insuranceValue: 50.00,
+        )
+    ));
+
+
+$checkoutLabelResponse = $melhorEnvioService->checkoutLabel(
+    new InputData(
+        orders: new OrderCollection(
+            [
+                new Order(
+                    key: $addShippingToCartResponse['id']
+                )
+            ]
+        )
+    )
+);
+    
+$generateLabelResponse = $melhorEnvioService->generateLabel(new InputData(
+        orders: new OrderCollection(
+            [
+                new Order(
+                    key: $addShippingToCartResponse['id']
+                )
+            ]
+        )
+    )
+);
 ```
 
 ## Contributing
