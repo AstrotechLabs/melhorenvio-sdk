@@ -38,7 +38,7 @@ $freightCalculationResponse = $freightCalculation->calculate(new FreightCalculat
     new FromData(postalCode: "60820050"),
     products: new ProductCollection(
         [
-            new Products(
+            new Product(
                 id: 'x',
                 width: 11,
                 height: 17,
@@ -347,14 +347,14 @@ $addShippingToCartResponse = $addShippingToCart->add(new AddShippingToCartInputD
             ),
             products: new ProductCollection(
                 [
-                    new Products(
+                    new Product(
                     name: 'perfume'
                     )
                 ]
             ),
             volumes: new VolumeCollection(
                 [
-                new Volumes(
+                new Volume(
                     height: 43,
                     width: 60,
                     length: 70,
