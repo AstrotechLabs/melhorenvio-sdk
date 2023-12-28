@@ -34,14 +34,7 @@ final class CheckoutLabel
             'User-Agent' => $this->userAgent
         ];
 
-        $orders = [];
-        $input->orders->map(function ($order) use (&$orders) {
-            $orders[] = $order->key;
-        });
-
-        $body = [
-            "orders" => $orders,
-        ];
+        $body = $input->toArray();
 
         try {
             $response = $this->httpClient->post("/api/v2/me/shipment/checkout", [

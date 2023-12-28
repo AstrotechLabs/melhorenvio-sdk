@@ -16,7 +16,7 @@ class OrderCollection extends CollectionBase
         $items = get_object_vars($this);
         $orders = [];
         foreach ($items['items'] as $key => $item) {
-            $orders[$key] = $item->toArray();
+            $orders[$key] = $item->key;
         }
         return $orders;
     }

@@ -34,9 +34,7 @@ final class GenerateLabel
                 'User-Agent' => $this->userAgent
             ];
 
-            $body = [
-                "orders" => $input->toArray(),
-            ];
+            $body = $input->toArray();
 
             try {
                 $response = $this->httpClient->post("/api/v2/me/shipment/generate", [

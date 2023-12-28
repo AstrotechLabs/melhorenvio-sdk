@@ -14,7 +14,7 @@ final class InputData implements JsonSerializable
     public function __construct(
         public readonly OrderCollection $orders
     ) {
-        if (isEmpty($this->orders)) {
+        if ($this->orders->isEmpty()) {
             throw new MelhorEnvioGenerateException(
                 code:400,
                 key:"orders",
