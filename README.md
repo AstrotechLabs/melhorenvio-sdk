@@ -5,7 +5,7 @@ Com funcionalidades intuitivas, nosso SDK permite acesso direto às soluções c
 ,tudo isso em um ambiente flexível e de fácil implementação. Agilize suas operações e proporcione uma experiência de envio excepcional aos seus clientes com o nosso SDK do Melhor Envio. 
 
 
-## Indíce
+## Índice
 1. [Instalação](#instalação)
 2. [Cotações de Frete](#cotações-de-frete)
 3. [Inserção de Items no carrinho](#inserção-de-itens-ao-carrinho)
