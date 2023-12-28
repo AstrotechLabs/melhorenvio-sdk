@@ -5,12 +5,14 @@ namespace AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto;
 use AstrotechLabs\MelhorEnvio\CheckoutLabel\MelhorEnvioCheckoutLabelException;
 use JsonSerializable;
 
-final class CheckoutLabelInputData implements JsonSerializable
+use function PHPUnit\Framework\isEmpty;
+
+final class InputData implements JsonSerializable
 {
     public function __construct(
         public readonly OrderCollection $orders,
     ) {
-        if (!$this->orders->count()) {
+        if (isEmpty($this->orders)) {
             throw new MelhorEnvioCheckoutLabelException(
                 code:400,
                 key:"orders",
@@ -22,7 +24,9 @@ final class CheckoutLabelInputData implements JsonSerializable
 
     public function toArray(): array
     {
-        return get_object_vars($this);
+        return [
+            "orders" => $this->orders->toArray()
+        ];
     }
 
     public function jsonSerialize(): array

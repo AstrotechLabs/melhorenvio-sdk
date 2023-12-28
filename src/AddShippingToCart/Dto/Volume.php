@@ -1,15 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
-namespace AstrotechLabs\MelhorEnvio\GenerateLabel\Dto;
+namespace AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto;
 
 use JsonSerializable;
 
-final class GenerateLabelOutputData implements JsonSerializable
+class Volume implements JsonSerializable
 {
     public function __construct(
-        public readonly array $details
+        public readonly int $height,
+        public readonly int $width,
+        public readonly int $length,
+        public readonly int $weight
     ) {
     }
 

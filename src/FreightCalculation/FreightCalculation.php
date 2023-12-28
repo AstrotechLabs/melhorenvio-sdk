@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AstrotechLabs\MelhorEnvio\FreightCalculation;
 
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FreightCalculationInputData;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FreightCalculationOutputData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\OutputData;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
@@ -26,52 +26,36 @@ final class FreightCalculation
         );
     }
 
-    public function calculate(FreightCalculationInputData $input): FreightCalculationOutputData
+    public function calculate(InputData $input): OutputData
     {
-            $headers = [
-                'Accept' => 'application/json',
-                'Authorization' => "Bearer {$this->accessToken}",
-                'Content-Type' => 'application/json',
-                'User-Agent' => $this->userAgent
-            ];
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => "Bearer {$this->accessToken}",
+            'Content-Type' => 'application/json',
+            'User-Agent' => $this->userAgent
+        ];
 
-            $productOrPackage = [];
-            if ($input->isProduct) {
-                $input->products->map(function ($product) use (&$productOrPackage) {
-                    $productOrPackage['products'][] = $product->toArray();
-                });
-            } else {
-                $input->package->map(function ($package) use (&$productOrPackage) {
-                    $productOrPackage['package'][] = $package->toArray();
-                });
-            }
-            $body = array_filter([
-                "from" => ["postal_code" => preg_replace("/[^0-9]/", "", $input->from->postalCode)],
-                "to" => ["postal_code" => preg_replace("/[^0-9]/", "", $input->to->postalCode)],
-                "options" => $input->options?->toArray(),
-                "service" => $input->services,
-                ...$productOrPackage
-            ]);
+        $body = $input->toArray();
+
         try {
-                $response = $this->httpClient->get("/api/v2/me/shipment/calculate", [
-                    'headers' => $headers,
-                    'json' => $body
-                    ]);
+            $response = $this->httpClient->get("/api/v2/me/shipment/calculate", [
+                'headers' => $headers,
+                'json' => $body
+            ]);
 
-                $responsePayload = json_decode($response->getBody()->getContents(), true);
-
+            $responsePayload = json_decode($response->getBody()->getContents(), true);
         } catch (ClientException $e) {
-                $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
-                throw new MelhorEnvioFreightCalculationException(
-                    code: $e->getCode(),
-                    key: array_key_first($responsePayload['errors']),
-                    description: $responsePayload['message'],
-                    responsePayload:$responsePayload
-                );
+            $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
+            throw new MelhorEnvioFreightCalculationException(
+                code: $e->getCode(),
+                key: array_key_first($responsePayload['errors']),
+                description: $responsePayload['message'],
+                responsePayload:$responsePayload
+            );
         }
 
-            return new FreightCalculationOutputData(
-                deliveryDetail: $responsePayload,
-            );
+        return new OutputData(
+            deliveryDetails: $responsePayload,
+        );
     }
 }

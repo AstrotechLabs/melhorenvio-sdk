@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration\FreightCalculation;
+namespace FreightCalculation;
 
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FreightCalculationInputData;
+use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FromData;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Package;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\PackageCollection;
@@ -29,7 +29,7 @@ final class FreightCalculationTest extends TestCase
             isSandbox: true
         );
 
-        $result = $freightCalculation->calculate(new FreightCalculationInputData(
+        $result = $freightCalculation->calculate(new InputData(
             new ToData(postalCode: "60820050"),
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
@@ -47,7 +47,7 @@ final class FreightCalculationTest extends TestCase
             )
         ));
 
-        $this->assertNotEmpty($result->deliveryDetail);
+        $this->assertNotEmpty($result->deliveryDetails);
     }
 
     public function testLookingForFreightCalculationInPackage()
@@ -59,7 +59,7 @@ final class FreightCalculationTest extends TestCase
             isSandbox: true
         );
 
-        $result = $freightCalculation->calculate(new FreightCalculationInputData(
+        $result = $freightCalculation->calculate(new InputData(
             new ToData(postalCode: "60820050"),
             new FromData(postalCode: "60820050"),
             package: new PackageCollection(
@@ -74,7 +74,7 @@ final class FreightCalculationTest extends TestCase
             ),
             isProduct: false
         ));
-        $this->assertNotEmpty($result->deliveryDetail);
+        $this->assertNotEmpty($result->deliveryDetails);
     }
 
     public function testItShouldThrowAnErrorWhenResponseReturnsAnyError()
@@ -88,7 +88,7 @@ final class FreightCalculationTest extends TestCase
             isSandbox: true
         );
 
-        $freightCalculation->calculate(new FreightCalculationInputData(
+        $freightCalculation->calculate(new InputData(
             new ToData(postalCode: "60820050"),
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
@@ -119,7 +119,7 @@ final class FreightCalculationTest extends TestCase
             isSandbox: true
         );
 
-        $freightCalculation->calculate(new FreightCalculationInputData(
+        $freightCalculation->calculate(new InputData(
             new ToData(postalCode: ""),
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
@@ -150,7 +150,7 @@ final class FreightCalculationTest extends TestCase
             isSandbox: true
         );
 
-        $freightCalculation->calculate(new FreightCalculationInputData(
+        $freightCalculation->calculate(new InputData(
             new ToData(postalCode: "dlaksml"),
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(

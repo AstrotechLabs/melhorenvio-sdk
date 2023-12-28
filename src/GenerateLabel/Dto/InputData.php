@@ -7,12 +7,14 @@ namespace AstrotechLabs\MelhorEnvio\GenerateLabel\Dto;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\MelhorEnvioGenerateException;
 use JsonSerializable;
 
-final class GenerateLabelInputData implements JsonSerializable
+use function PHPUnit\Framework\isEmpty;
+
+final class InputData implements JsonSerializable
 {
     public function __construct(
         public readonly OrderCollection $orders
     ) {
-        if (!$this->orders->count()) {
+        if (isEmpty($this->orders)) {
             throw new MelhorEnvioGenerateException(
                 code:400,
                 key:"orders",
@@ -24,7 +26,9 @@ final class GenerateLabelInputData implements JsonSerializable
 
     public function toArray(): array
     {
-        return get_object_vars($this);
+        return [
+            "orders" => $this->orders->toArray()
+        ];
     }
 
     public function jsonSerialize(): array

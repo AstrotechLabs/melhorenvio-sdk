@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace Integration\AddShippingToCart;
 
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\AddShippingToCart;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartInputData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\FromData;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OptionsData;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ProductCollection;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Products;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Product;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ToData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OrderCollection;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Order;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\VolumeCollection;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volumes;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volume;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\MelhorEnvioAddShippingToCartException;
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;
@@ -31,7 +29,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $result = $addShippingToCart->add(new AddShippingToCartInputData(
+        $result = $addShippingToCart->add(new InputData(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -46,16 +44,16 @@ final class AddShippingToCartTest extends TestCase
                 address: "Jardim das Oliveiras",
                 city: "Cidade 2000",
                 postalCode:"60820050",
-                isDocument: true
+                isPf: true
             ),
             products: new ProductCollection(
                 [
-                    new Products(name: 'perfume')
+                    new Product(name: 'perfume')
                 ]
             ),
             volumes: new VolumeCollection(
                 [
-                new Volumes(
+                new Volume(
                     height: 43,
                     width: 60,
                     length: 70,
@@ -89,7 +87,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new AddShippingToCartInputData(
+        $addShippingToCart->add(new InputData(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -106,16 +104,16 @@ final class AddShippingToCartTest extends TestCase
                 number: "65",
                 city: "Cidade dosFuncionários",
                 postalCode:"60820-050",
-                isDocument: true
+                isPf: true
             ),
             products: new ProductCollection(
                 [
-                    new Products(name: 'perfume')
+                    new Product(name: 'perfume')
                 ]
             ),
             volumes: new VolumeCollection(
                 [
-                    new Volumes(
+                    new Volume(
                         height: 43,
                         width: 60,
                         length: 70,
@@ -141,7 +139,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new AddShippingToCartInputData(
+        $addShippingToCart->add(new InputData(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -158,16 +156,16 @@ final class AddShippingToCartTest extends TestCase
                 number: "65",
                 city: "Cidade dosFuncionários",
                 postalCode:"60820-050",
-                isDocument: true
+                isPf: true
             ),
             products: new ProductCollection(
                 [
-                    new Products(name: 'perfume')
+                    new Product(name: 'perfume')
                 ]
             ),
             volumes: new VolumeCollection(
                 [
-                    new Volumes(
+                    new Volume(
                         height: 43,
                         width: 60,
                         length: 70,
@@ -185,7 +183,6 @@ final class AddShippingToCartTest extends TestCase
     {
         $this->expectException(MelhorEnvioAddShippingToCartException::class);
         $this->expectExceptionMessage('O campo to.address é obrigatório.');
-//        $this->expectExceptionMessage('O campo from.address é obrigatório.');
         $this->expectExceptionCode(422);
 
         $addShippingToCart = new AddShippingToCart(
@@ -194,7 +191,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new AddShippingToCartInputData(
+        $addShippingToCart->add(new InputData(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -211,16 +208,16 @@ final class AddShippingToCartTest extends TestCase
                 number: "65",
                 city: "Cidade dosFuncionários",
                 postalCode:"60820-050",
-                isDocument: true
+                isPf: true
             ),
             products: new ProductCollection(
                 [
-                    new Products(name: 'perfume')
+                    new Product(name: 'perfume')
                 ]
             ),
             volumes: new VolumeCollection(
                 [
-                    new Volumes(
+                    new Volume(
                         height: 43,
                         width: 60,
                         length: 70,
@@ -238,7 +235,6 @@ final class AddShippingToCartTest extends TestCase
     {
         $this->expectException(MelhorEnvioAddShippingToCartException::class);
         $this->expectExceptionMessage('O campo to.city é obrigatório.');
-//        $this->expectExceptionMessage('O campo from.city é obrigatório.');
         $this->expectExceptionCode(422);
 
         $addShippingToCart = new AddShippingToCart(
@@ -247,7 +243,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new AddShippingToCartInputData(
+        $addShippingToCart->add(new InputData(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -262,16 +258,16 @@ final class AddShippingToCartTest extends TestCase
                 address: "Luiza Távora",
                 city: "",
                 postalCode:"60820-050",
-                isDocument: true
+                isPf: true
             ),
             products: new ProductCollection(
                 [
-                    new Products(name: 'perfume')
+                    new Product(name: 'perfume')
                 ]
             ),
             volumes: new VolumeCollection(
                 [
-                    new Volumes(
+                    new Volume(
                         height: 43,
                         width: 60,
                         length: 70,
@@ -288,7 +284,6 @@ final class AddShippingToCartTest extends TestCase
     public function testShouldGenerateAnErrorWhenThePostalCodeIsEmpty()
     {
         $this->expectException(MelhorEnvioAddShippingToCartException::class);
-//        $this->expectExceptionMessage('O campo to.postal code é obrigatório.');
         $this->expectExceptionMessage('O campo from.postal code é obrigatório.');
         $this->expectExceptionCode(422);
 
@@ -298,7 +293,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new AddShippingToCartInputData(
+        $addShippingToCart->add(new InputData(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -313,16 +308,16 @@ final class AddShippingToCartTest extends TestCase
                 address: "Luiza Távora",
                 city: "Cidade 2000",
                 postalCode:"60820050",
-                isDocument: true
+                isPf: true
             ),
             products: new ProductCollection(
                 [
-                    new Products(name: 'perfume')
+                    new Product(name: 'perfume')
                 ]
             ),
             volumes: new VolumeCollection(
                 [
-                    new Volumes(
+                    new Volume(
                         height: 43,
                         width: 60,
                         length: 70,
@@ -348,7 +343,7 @@ final class AddShippingToCartTest extends TestCase
             isSandbox: true
         );
 
-        $addShippingToCart->add(new AddShippingToCartInputData(
+        $addShippingToCart->add(new InputData(
             service: 2,
             from: new FromData(
                 name: self::$faker->name(),
@@ -363,16 +358,16 @@ final class AddShippingToCartTest extends TestCase
                 address: "Luiza Távora",
                 city: "Cidade 2000",
                 postalCode:"60820050",
-                isDocument: true
+                isPf: true
             ),
             products: new ProductCollection(
                 [
-                    new Products(name: 'perfume')
+                    new Product(name: 'perfume')
                 ]
             ),
             volumes: new VolumeCollection(
                 [
-                    new Volumes(
+                    new Volume(
                         height: 43,
                         width: 60,
                         length: 70,

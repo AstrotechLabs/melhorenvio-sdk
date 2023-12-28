@@ -8,7 +8,7 @@ use JsonSerializable;
 class ToData implements JsonSerializable
 {
     public function __construct(
-        public readonly string $postalCode,
+        public string $postalCode,
     ) {
         if (empty($this->postalCode)) {
             throw new MelhorEnvioFreightCalculationException(
@@ -19,7 +19,8 @@ class ToData implements JsonSerializable
             );
         }
 
-        if (!preg_match('/^[0-9]+$/', $this->postalCode)) {
+        $this->postalCode = preg_replace("/[^0-9]/", '', $this->postalCode);
+        if (!is_numeric($this->postalCode)) {
             throw new MelhorEnvioFreightCalculationException(
                 code: 400,
                 key: "to.postal code",

@@ -2,7 +2,7 @@
 
 namespace Integration\GenerateLabel;
 
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\GenerateLabelInputData;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\Order;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OrderCollection;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\GenerateLabel;
@@ -23,7 +23,7 @@ class GenerateLabelTest extends TestCase
             isSandbox: true
         );
 
-        $result = $generateLabel->generate(new GenerateLabelInputData(
+        $result = $generateLabel->generate(new InputData(
             orders:new OrderCollection(
                 [new Order(key: "9af3f99a-301e-4239-9c3d-7cb7e7bb3825")]
             )
@@ -44,7 +44,7 @@ class GenerateLabelTest extends TestCase
             isSandbox: true
         );
 
-        $checkoutLabel->generate(new GenerateLabelInputData(
+        $checkoutLabel->generate(new InputData(
             orders: new OrderCollection([]),
         ));
     }
@@ -61,7 +61,7 @@ class GenerateLabelTest extends TestCase
             isSandbox: true
         );
 
-        $checkoutLabel->generate(new GenerateLabelInputData(
+        $checkoutLabel->generate(new InputData(
             orders: new OrderCollection(
                 [
                     new Order(

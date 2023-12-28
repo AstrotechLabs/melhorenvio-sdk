@@ -4,7 +4,7 @@ namespace AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto;
 
 use JsonSerializable;
 
-class AddShippingToCartInputData implements JsonSerializable
+class InputData implements JsonSerializable
 {
     public function __construct(
         public readonly int $service,

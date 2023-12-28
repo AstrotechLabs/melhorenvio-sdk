@@ -10,7 +10,7 @@ final class FromData implements JsonSerializable
     public function __construct(
         public readonly string $name,
         public readonly string $address,
-        public readonly string $postalCode,
+        public string $postalCode,
         public readonly string $city,
         public readonly string $phone = '',
         public readonly string $email = '',
@@ -23,9 +23,9 @@ final class FromData implements JsonSerializable
         public readonly string $countryId = '',
         public readonly string $stateAbbr = '',
         public readonly string $note = '',
-        public readonly bool $isDocument = false
+        public readonly bool $isPf = false
     ) {
-        if ($this->isDocument && empty($this->document)) {
+        if ($this->isPf && empty($this->document)) {
             throw new MelhorEnvioAddShippingToCartException(
                 code: 400,
                 key: "from.company",
@@ -34,7 +34,7 @@ final class FromData implements JsonSerializable
             );
         }
 
-        if (!$this->isDocument && empty($this->companyDocument)) {
+        if (!$this->isPf && empty($this->companyDocument)) {
             throw new MelhorEnvioAddShippingToCartException(
                 code: 400,
                 key: "from.companyDocument",
@@ -43,7 +43,8 @@ final class FromData implements JsonSerializable
             );
         }
 
-        if (!preg_match('/^[0-9]+$/', $this->postalCode)) {
+        $this->postalCode = preg_replace("/[^0-9]/", '', $this->postalCode);
+        if (!is_numeric($this->postalCode)) {
             throw new MelhorEnvioAddShippingToCartException(
                 code: 400,
                 key: "from.postal code",

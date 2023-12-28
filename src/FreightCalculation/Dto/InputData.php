@@ -7,13 +7,13 @@ namespace AstrotechLabs\MelhorEnvio\FreightCalculation\Dto;
 use AstrotechLabs\MelhorEnvio\CheckoutLabel\MelhorEnvioCheckoutLabelException;
 use JsonSerializable;
 
-final class FreightCalculationInputData implements JsonSerializable
+final class InputData implements JsonSerializable
 {
     public function __construct(
         public readonly ToData $to,
         public readonly FromData $from,
-        public readonly ProductCollection|null $products = null,
-        public readonly PackageCollection|null $package = null,
+        public ProductCollection|null $products = null,
+        public PackageCollection|null $package = null,
         public readonly OptionsData|null $options = null,
         public readonly string|null $services = null,
         public readonly bool $isProduct = true,
@@ -27,7 +27,7 @@ final class FreightCalculationInputData implements JsonSerializable
             );
         }
 
-        if (!$this->isProduct && empty($this->package   )) {
+        if (!$this->isProduct && empty($this->package)) {
             throw new MelhorEnvioCheckoutLabelException(
                 code:400,
                 key:"package",
@@ -39,7 +39,14 @@ final class FreightCalculationInputData implements JsonSerializable
 
     public function toArray(): array
     {
-        return get_object_vars($this);
+        return array_filter([
+            "from" => ["postal_code" => $this->from->postalCode],
+            "to" => ["postal_code" => $this->to->postalCode],
+            "options" => $this->options?->toArray(),
+            "service" => $this->services,
+            "products" => $this->products?->toArray(),
+            "package" => $this->products?->toArray()
+        ]);
     }
 
     public function jsonSerialize(): array

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CheckoutLabel;
 
 use AstrotechLabs\MelhorEnvio\CheckoutLabel\CheckoutLabel;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\CheckoutLabelInputData;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\Order;
 use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OrderCollection;
 use AstrotechLabs\MelhorEnvio\CheckoutLabel\MelhorEnvioCheckoutLabelException;
@@ -25,7 +25,7 @@ final class CheckoutLabelTest extends TestCase
             isSandbox: true
         );
 
-        $result = $checkoutLabel->confirmPushase(new CheckoutLabelInputData(
+        $result = $checkoutLabel->confirmPushase(new InputData(
             orders: new OrderCollection(
                 [new Order(
                     key: '9af3f99a-301e-4239-9c3d-7cb7e7bb3825'
@@ -49,7 +49,7 @@ final class CheckoutLabelTest extends TestCase
             isSandbox: true
         );
 
-        $checkoutLabel->confirmPushase(new CheckoutLabelInputData(
+        $checkoutLabel->confirmPushase(new InputData(
             orders: new OrderCollection(
                 [new Order(
                     key: '67173a6e-2955-4c1c-bf94-9ef6fd399a12'
@@ -71,10 +71,10 @@ final class CheckoutLabelTest extends TestCase
             isSandbox: true
         );
 
-        $checkoutLabel->confirmPushase(new CheckoutLabelInputData(
+        $checkoutLabel->confirmPushase(new InputData(
             orders: new OrderCollection(
                 [new Order(
-                    key: 'ass4c1c-bf94-9ef6fd399a12'
+                    key: 'assdasassas-2955-4c1c-bf94-9ef6fd399a12'
                 )
                 ]
             )

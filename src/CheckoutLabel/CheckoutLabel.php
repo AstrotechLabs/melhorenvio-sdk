@@ -2,8 +2,8 @@
 
 namespace AstrotechLabs\MelhorEnvio\CheckoutLabel;
 
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\CheckoutLabelInputData;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\CheckoutLabelOutputData;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OutputData;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\MelhorEnvioGenerateException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -25,7 +25,7 @@ final class CheckoutLabel
         );
     }
 
-    public function confirmPushase(CheckoutLabelInputData $input): CheckoutLabelOutputData
+    public function confirmPushase(InputData $input): OutputData
     {
         $headers = [
             'Accept' => 'application/json',
@@ -60,7 +60,7 @@ final class CheckoutLabel
             );
         }
 
-        return new CheckoutLabelOutputData(
+        return new OutputData(
             purchase: $responsePayload['purchase'],
             payloadDetail: $responsePayload
         );

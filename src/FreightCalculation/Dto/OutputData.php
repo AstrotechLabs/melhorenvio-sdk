@@ -1,14 +1,15 @@
 <?php
 
-namespace AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto;
+declare(strict_types=1);
+
+namespace AstrotechLabs\MelhorEnvio\FreightCalculation\Dto;
 
 use JsonSerializable;
 
-final class CheckoutLabelOutputData implements JsonSerializable
+final class OutputData implements JsonSerializable
 {
     public function __construct(
-        public readonly array $purchase,
-        public readonly array $payloadDetail,
+        public readonly array $deliveryDetails,
     ) {
     }
 

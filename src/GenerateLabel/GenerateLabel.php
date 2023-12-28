@@ -3,8 +3,8 @@
 namespace AstrotechLabs\MelhorEnvio\GenerateLabel;
 
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\MelhorEnvioAddShippingToCartException;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\GenerateLabelInputData;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\GenerateLabelOutputData;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OutputData;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
@@ -25,7 +25,7 @@ final class GenerateLabel
         );
     }
 
-    public function generate(GenerateLabelInputData $input): GenerateLabelOutputData
+    public function generate(InputData $input): OutputData
     {
             $headers = [
                 'Accept' => 'application/json',
@@ -34,13 +34,8 @@ final class GenerateLabel
                 'User-Agent' => $this->userAgent
             ];
 
-            $orders = [];
-            $input->orders->map(function ($order) use (&$orders) {
-                $orders[] = $order->key;
-            });
-
             $body = [
-                "orders" => $orders,
+                "orders" => $input->toArray(),
             ];
 
             try {
@@ -60,7 +55,7 @@ final class GenerateLabel
                 );
             }
 
-            return new GenerateLabelOutputData(
+            return new OutputData(
                 details: $responsePayload
             );
     }

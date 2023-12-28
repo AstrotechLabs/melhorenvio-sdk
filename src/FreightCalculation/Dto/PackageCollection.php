@@ -10,4 +10,14 @@ class PackageCollection extends CollectionBase
     {
         return Package::class;
     }
+
+    public function toArray(): array
+    {
+        $items = get_object_vars($this);
+        $packages = [];
+        foreach ($items['items'] as $key => $item) {
+            $packages[$key] = $item->toArray();
+        }
+        return $packages;
+    }
 }

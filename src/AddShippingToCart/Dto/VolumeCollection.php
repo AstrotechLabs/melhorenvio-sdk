@@ -8,6 +8,6 @@ class VolumeCollection extends CollectionBase
 {
     protected function className(): string
     {
-        return Volumes::class;
+        return Volume::class;
     }
 }

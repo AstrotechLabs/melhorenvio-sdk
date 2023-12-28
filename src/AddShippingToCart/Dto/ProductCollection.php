@@ -9,6 +9,6 @@ class ProductCollection extends CollectionBase
 
     protected function className(): string
     {
-        return Products::class;
+        return Product::class;
     }
 }

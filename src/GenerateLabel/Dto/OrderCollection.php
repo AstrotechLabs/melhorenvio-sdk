@@ -10,4 +10,14 @@ class OrderCollection extends CollectionBase
     {
         return Order::class;
     }
+
+    public function toArray(): array
+    {
+        $items = get_object_vars($this);
+        $orders = [];
+        foreach ($items['items'] as $key => $item) {
+            $orders[$key] = $item->toArray();
+        }
+        return $orders;
+    }
 }

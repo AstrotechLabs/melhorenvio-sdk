@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace AstrotechLabs\MelhorEnvio\FreightCalculation\Dto;
+namespace AstrotechLabs\MelhorEnvio\GenerateLabel\Dto;
 
 use JsonSerializable;
 
-final class FreightCalculationOutputData implements JsonSerializable
+final class OutputData implements JsonSerializable
 {
     public function __construct(
-        public readonly array $deliveryDetail,
+        public readonly array $details
     ) {
     }
 

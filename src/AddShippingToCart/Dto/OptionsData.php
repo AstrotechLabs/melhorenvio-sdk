@@ -9,13 +9,13 @@ final class OptionsData implements JsonSerializable
 {
     public function __construct(
         public readonly float $insuranceValue,
-        public readonly InvoiceData|null $invoice = null,
-        public readonly string $platform = '',
-        public readonly TagsData|null $tags = null,
+        public readonly bool $nonCommercial = true,
         public readonly bool $receipt = false,
         public readonly bool $ownHand = false,
         public readonly bool $reverse = false,
-        public readonly bool $nonCommercial = true
+        public readonly string $platform = '',
+        public readonly InvoiceData|null $invoice = null,
+        public readonly TagsData|null $tags = null,
     ) {
     }
 
