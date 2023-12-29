@@ -6,11 +6,19 @@ Com funcionalidades intuitivas, nosso SDK permite acesso direto às soluções c
 
 
 ## Índice
-1. [Instalação](#instalação)
-2. [Cotações de Frete](#cotações-de-frete)
-3. [Inserção de Items no carrinho](#inserção-de-itens-ao-carrinho)
-4. [Geração de Etiquetas](#geração-de-etiquetas)
-5. [Exemplo Prático](#segue-o-exemplo-prático-do-fluxo-de-compra-de-frete-e-geração-de-etiqueta)
+- [Melhor Envio SDK para PHP](#melhor-envio-sdk-para-php)
+  - [Índice](#índice)
+  - [Instalação](#instalação)
+  - [Como Usar?](#como-usar)
+  - [Cotações de Frete](#cotações-de-frete)
+    - [Por Produtos](#por-produtos)
+    - [Por Pacotes](#por-pacotes)
+    - [Inserção de itens ao carrinho](#inserção-de-itens-ao-carrinho)
+    - [Compra de Fretes](#compra-de-fretes)
+    - [Geração de Etiquetas](#geração-de-etiquetas)
+  - [Abaixo veja o exemplo do fluxo desde a cotação do frete à geração de etiquetas](#abaixo-veja-o-exemplo-do-fluxo-desde-a-cotação-do-frete-à-geração-de-etiquetas)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
 
 ## Instalação
 
@@ -257,7 +265,7 @@ Através de integrações simples e intuitivas, é possível adicionar itens ao 
 dimensões e valor declarado. 
 Isso proporciona uma visão abrangente dos envios planejados, facilitando a compra de fretes, a geração de etiquetas  tudo em um só lugar.
 
-Antes de prosseguir, você deverá inserir á um carrinho de compras os produtos que serão enviados.
+Antes de prosseguir, você deverá inserir á um carrinho de compras os produtos que serão enviados, nesse passo será gerado o pedido com todos os detalhes, vale ressaltar sobre o id retornado, ele quem será utilizado para a compra de frete e geração de etiqueta.
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
