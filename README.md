@@ -6,7 +6,7 @@ Com funcionalidades intuitivas, nosso SDK permite acesso direto às soluções c
 
 
 ## Índice
-- [Melhor Envio SDK para PHP](#melhor-envio-sdk-para-php)
+
   - [Índice](#índice)
   - [Instalação](#instalação)
   - [Como Usar?](#como-usar)
@@ -16,7 +16,7 @@ Com funcionalidades intuitivas, nosso SDK permite acesso direto às soluções c
     - [Inserção de itens ao carrinho](#inserção-de-itens-ao-carrinho)
     - [Compra de Fretes](#compra-de-fretes)
     - [Geração de Etiquetas](#geração-de-etiquetas)
-  - [Abaixo veja o exemplo do fluxo desde a cotação do frete à geração de etiquetas](#abaixo-veja-o-exemplo-do-fluxo-desde-a-cotação-do-frete-à-geração-de-etiquetas)
+  - [Exemplo de uso](#abaixo-veja-o-exemplo-do-fluxo-desde-a-cotação-do-frete-à-geração-de-etiquetas)
   - [Contributing](#contributing)
   - [Licence](#licence)
 
