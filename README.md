@@ -27,13 +27,13 @@ A forma mais recomendada de instalar este pacote é através do [composer](http:
 Para instalar, basta executar o comando abaixo
 
 ```bash
-$ php composer.phar require vaironaegos/melhorenvio-sdk
+@todo
 ```
 
 ou adicionar esse linha
 
 ```
-"astrotechlabs/melhorenvio-sdk": "^1.0"
+@todo
 ```
 
 na seção `require` do seu arquivo `composer.json`.
