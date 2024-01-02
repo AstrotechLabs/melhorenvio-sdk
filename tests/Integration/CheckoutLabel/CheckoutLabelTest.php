@@ -34,7 +34,7 @@ final class CheckoutLabelTest extends TestCase
             )
         ));
         $this->assertNotEmpty($result->purchase);
-        $this->assertNotEmpty($result->payloadDetail);
+        $this->assertNotEmpty($result->payloadDetails);
     }
 
     public function testItShouldThrowAnErrorWhenResponseReturnsAnyError()

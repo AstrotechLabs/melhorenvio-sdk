@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OutputData;
+use GuzzleHttp\Exception\ServerException;
 
 final class CheckoutLabel
 {
@@ -41,7 +42,11 @@ final class CheckoutLabel
                 'json' => $input->toArray()
             ]);
             $responsePayload = json_decode($response->getBody()->getContents(), true);
-        } catch (ClientException $e) {
+        } catch (
+            ClientException
+            | ServerException
+            $e
+        ) {
             $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
             $key = isset($responsePayload['errors']) ? array_key_first($responsePayload['errors']) : "Request Error";
             $description = isset($responsePayload['message']) ? $responsePayload['message'] : $responsePayload['error'];
