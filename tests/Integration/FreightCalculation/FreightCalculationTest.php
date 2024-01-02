@@ -50,7 +50,7 @@ final class FreightCalculationTest extends TestCase
         $this->assertNotEmpty($result->deliveryDetails);
     }
 
-    public function testLookingForFreightCalculationInPackage()
+    public function testLookingForFreightCalculationInPackages()
     {
 
         $freightCalculation = new FreightCalculation(
@@ -64,6 +64,39 @@ final class FreightCalculationTest extends TestCase
             new FromData(postalCode: "60820050"),
             package: new PackageCollection(
                 [
+                    new Package(
+                        height: 17,
+                        width: 11,
+                        length: 11,
+                        weight: 3,
+                    )
+                ]
+            ),
+            isProduct: false
+        ));
+        $this->assertNotEmpty($result->deliveryDetails);
+    }
+
+    public function testLookingForFreightCalculationWithMultiplePackages()
+    {
+
+        $freightCalculation = new FreightCalculation(
+            accessToken: $_ENV['MELHOR_ENVIO_API_TOKEN'],
+            userAgent: $_ENV['MELHOR_ENVIO_USER_AGENT'],
+            isSandbox: true
+        );
+
+        $result = $freightCalculation->calculate(new InputData(
+            new ToData(postalCode: "60820050"),
+            new FromData(postalCode: "60820050"),
+            package: new PackageCollection(
+                [
+                    new Package(
+                        height: 17,
+                        width: 11,
+                        length: 11,
+                        weight: 3,
+                    ),
                     new Package(
                         height: 17,
                         width: 11,
