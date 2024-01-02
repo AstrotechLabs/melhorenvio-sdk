@@ -43,11 +43,12 @@ final class CheckoutLabel
             $responsePayload = json_decode($response->getBody()->getContents(), true);
         } catch (ClientException $e) {
             $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
-
+            $key = isset($responsePayload['errors']) ? array_key_first($responsePayload['errors']) : "Request Error";
+            $description = isset($responsePayload['message']) ? $responsePayload['message'] : $responsePayload['error'];
             throw new MelhorEnvioCheckoutLabelException(
                 code: $e->getCode(),
-                key: array_key_first($responsePayload['errors']),
-                description: $responsePayload['message'],
+                key: $key,
+                description: $description,
                 responsePayload:$responsePayload
             );
         }
