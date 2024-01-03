@@ -6,9 +6,9 @@ namespace AstrotechLabs\MelhorEnvio\AddShippingToCart;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OutputData;
 use GuzzleHttp\Exception\ServerException;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OutputData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
 
 final class AddShippingToCart
 {
@@ -63,8 +63,8 @@ final class AddShippingToCart
             protocol: $responsePayload['protocol'],
             serviceId: $responsePayload['service_id'],
             price: $responsePayload['price'],
-            deliveryMin: $responsePayload['delivery_min'],
-            deliveryMax: $responsePayload['delivery_max'],
+            deliveryMinDays: $responsePayload['delivery_min'],
+            deliveryMaxDays: $responsePayload['delivery_max'],
             status: $responsePayload['status'],
             payloadDetails: $responsePayload
         );

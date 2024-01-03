@@ -13,8 +13,8 @@ class OutputData implements JsonSerializable
         public readonly string $protocol,
         public readonly int $serviceId,
         public readonly float $price,
-        public readonly int $deliveryMin,
-        public readonly int $deliveryMax,
+        public readonly int $deliveryMinDays,
+        public readonly int $deliveryMaxDays,
         public readonly string $status,
         public readonly array $payloadDetails
     ) {

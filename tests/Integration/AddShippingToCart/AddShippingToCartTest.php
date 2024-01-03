@@ -69,10 +69,12 @@ final class AddShippingToCartTest extends TestCase
         $this->assertNotEmpty($result->id);
         $this->assertNotEmpty($result->protocol);
         $this->assertNotEmpty($result->serviceId);
+        $this->assertEquals(2, $result->serviceId);
         $this->assertNotEmpty($result->price);
-        $this->assertNotEmpty($result->deliveryMax);
-        $this->assertNotEmpty($result->deliveryMin);
+        $this->assertNotEmpty($result->deliveryMaxDays);
+        $this->assertNotEmpty($result->deliveryMinDays);
         $this->assertNotEmpty($result->status);
+        $this->assertEquals('pending', $result->status);
     }
 
     public function testMustReturnOrderInformationSeveralVolumes()
@@ -123,10 +125,12 @@ final class AddShippingToCartTest extends TestCase
         $this->assertNotEmpty($result->id);
         $this->assertNotEmpty($result->protocol);
         $this->assertNotEmpty($result->serviceId);
+        $this->assertEquals(2, $result->serviceId);
         $this->assertNotEmpty($result->price);
-        $this->assertNotEmpty($result->deliveryMax);
-        $this->assertNotEmpty($result->deliveryMin);
+        $this->assertNotEmpty($result->deliveryMaxDays);
+        $this->assertNotEmpty($result->deliveryMinDays);
         $this->assertNotEmpty($result->status);
+        $this->assertEquals('pending', $result->status);
     }
 
     public function testShouldGenerateAnErrorWhenTheCarrierDoesNotAcceptMoreThanOneVolumePerOrder()

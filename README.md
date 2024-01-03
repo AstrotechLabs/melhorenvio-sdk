@@ -335,8 +335,8 @@ Saída
     'protocol' => ORD-202312198407
     'serviceId' => 2
     'price' => 615.76
-    'deliveryMin' => 4
-    'deliveryMax' => 5
+    'deliveryMinDays' => 4
+    'deliveryMaxDays' => 5
     'status' => pending
     'payloadDetails' => [
             'id' => 9af54411-a4c1-4e64-9ccd-06959f59b984
