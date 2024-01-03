@@ -1,8 +1,9 @@
 # Melhor Envio SDK para PHP
 
-Bem-vindo ao SDK do Melhor Envio! Nossa ferramenta oferece uma integração poderosa e simplificada para otimizar e facilitar o processo de gestão de envios.
-Com funcionalidades intuitivas, nosso SDK permite acesso direto às soluções como cotação de frete, criação de pedidos, compra de frete e geração de etiquetas 
-,tudo isso em um ambiente flexível e de fácil implementação. Agilize suas operações e proporcione uma experiência de envio excepcional aos seus clientes com o nosso SDK do Melhor Envio. 
+Bem-vindo ao SDK do Melhor Envio!
+Nossa biblioteca permite ao desenvolvedor uma comunicação simples e direta com o serviço Melhor Envio.
+Com ela é possível realizar operações como fazer cotação de frete, criação de pedidos, 
+compra de frete e geração de etiquetas (veja exemplos). 
 
 
 ## Índice
@@ -40,13 +41,12 @@ na seção `require` do seu arquivo `composer.json`.
 
 ## Como Usar?
 ## Cotações de Frete
-As cotações de frete oferecidas pelo Melhor Envio são uma ferramenta essencial para e-commerce e envios em geral.
 Com base nas integrações com diversas transportadoras.
 
 Em nosso SDK é permitido realizar as cotações tanto por produtos, quanto por pacotes.
 
 ### Por Produtos
-- É possível realizar o cálculo de um frete por produtos individualmente, informando o peso e os demais dados abaixo.
+É possível realizar o cálculo de um frete por produtos individualmente, informando o peso e os demais dados abaixo.
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
@@ -152,7 +152,7 @@ Saída
 ```
 
 ### Por Pacotes
-- É possível realizar o cálculo por pacotes, seguindo o modelo abaixo:
+É possível realizar o cálculo por pacotes, seguindo o modelo abaixo:
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
@@ -261,11 +261,10 @@ Saída
 
 Nosso SDK permite aos usuários reunir e organizar os produtos a serem enviados em um único local. 
 
-Através de integrações simples e intuitivas, é possível adicionar itens ao carrinho, detalhando informações como peso, 
-dimensões e valor declarado. 
-Isso proporciona uma visão abrangente dos envios planejados, facilitando a compra de fretes, a geração de etiquetas  tudo em um só lugar.
+É possível adicionar itens ao carrinho detalhando informações como peso, dimensões e valor declarado.
 
-Antes de prosseguir, você deverá inserir á um carrinho de compras os produtos que serão enviados, nesse passo será gerado o pedido com todos os detalhes, vale ressaltar sobre o id retornado, ele quem será utilizado para a compra de frete e geração de etiqueta.
+Antes de prosseguir, você deverá adicionar num carrinho os produtos que serão enviados. Nesse passo será gerado o pedido com todos os detalhes e será retorna um id, 
+que será necessário posteriormente para a compra de frete e geração de etiqueta.
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
@@ -349,12 +348,10 @@ Saída
 ```
 
 ### Compra de Fretes
-A compra de fretes é um processo simplificado e eficiente para os usuários que desejam enviar suas encomendas.
+Após selecionar a melhor opção de frete com base nas cotações disponíveis,
+é possível realizar a compra direta dos serviços de transporte de transportadoras parceiras. 
 
-Após selecionar a melhor opção de frete com base nas cotações disponíveis, é possivel realizar a compra direta dos serviços de transporte de diversas transportadoras parceiras. 
-
-
-Para esta ação é requisitado o id do pedido, à partir dessa informação será possivel realizar a compra.
+Para esta ação é necessário o id do pedido.
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
@@ -462,8 +459,6 @@ Saída
 ```
 
 ### Geração de Etiquetas
-A geração de etiquetas no Melhor Envio é uma etapa crucial e conveniente no processo de envio de pacotes. 
-
 Após a escolha da opção de frete desejada e a compra do serviço, nosso SDK possibilita a criação rápida e simples de etiquetas de envio.
 
 Para realizar essa ação será necessário o id do pedido.
