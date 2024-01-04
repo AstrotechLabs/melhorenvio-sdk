@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\GenerateLabel;
+namespace Tests\Integration\GenerateLabel;
 
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;

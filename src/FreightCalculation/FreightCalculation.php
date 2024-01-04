@@ -6,6 +6,7 @@ namespace AstrotechLabs\MelhorEnvio\FreightCalculation;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\OutputData;
 
@@ -42,12 +43,18 @@ final class FreightCalculation
             ]);
 
             $responsePayload = json_decode($response->getBody()->getContents(), true);
-        } catch (ClientException $e) {
+        } catch (
+            ClientException
+            | ServerException
+            $e
+        ) {
             $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $key = isset($responsePayload['errors']) ? array_key_first($responsePayload['errors']) : "Request Error";
+            $description = isset($responsePayload['message']) ? $responsePayload['message'] : $responsePayload['error'];
             throw new MelhorEnvioFreightCalculationException(
                 code: $e->getCode(),
-                key: array_key_first($responsePayload['errors']),
-                description: $responsePayload['message'],
+                key: $key,
+                description: $description,
                 responsePayload:$responsePayload
             );
         }

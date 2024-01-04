@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace AstrotechLabs\MelhorEnvio\CheckoutLabel;
+namespace AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OutputData;
+use GuzzleHttp\Exception\ServerException;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\OutputData;
 
-final class CheckoutLabel
+final class ConfirmPurchaseLabel
 {
     private Client $httpClient;
 
@@ -26,7 +27,7 @@ final class CheckoutLabel
         );
     }
 
-    public function confirmPushase(InputData $input): OutputData
+    public function confirmPurchase(InputData $input): OutputData
     {
         $headers = [
             'Accept' => 'application/json',
@@ -41,13 +42,18 @@ final class CheckoutLabel
                 'json' => $input->toArray()
             ]);
             $responsePayload = json_decode($response->getBody()->getContents(), true);
-        } catch (ClientException $e) {
+        } catch (
+            ClientException
+            | ServerException
+            $e
+        ) {
             $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
-
+            $key = isset($responsePayload['errors']) ? array_key_first($responsePayload['errors']) : "Request Error";
+            $description = isset($responsePayload['message']) ? $responsePayload['message'] : $responsePayload['error'];
             throw new MelhorEnvioCheckoutLabelException(
                 code: $e->getCode(),
-                key: array_key_first($responsePayload['errors']),
-                description: $responsePayload['message'],
+                key: $key,
+                description: $description,
                 responsePayload:$responsePayload
             );
         }

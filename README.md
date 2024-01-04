@@ -1,13 +1,13 @@
 # Melhor Envio SDK para PHP
 
-Bem-vindo ao SDK do Melhor Envio! Nossa ferramenta oferece uma integração poderosa e simplificada para otimizar e facilitar o processo de gestão de envios.
-Com funcionalidades intuitivas, nosso SDK permite acesso direto às soluções como cotação de frete, criação de pedidos, compra de frete e geração de etiquetas 
-,tudo isso em um ambiente flexível e de fácil implementação. Agilize suas operações e proporcione uma experiência de envio excepcional aos seus clientes com o nosso SDK do Melhor Envio. 
+Bem-vindo ao SDK do Melhor Envio!
+Nossa biblioteca permite ao desenvolvedor realizar uma comunicação simples e direta com o serviço Melhor Envio.
+Com ela é possível realizar operações como fazer cotação de frete, criação de pedidos, 
+compra de frete e geração de etiquetas (veja exemplos). 
 
 
 ## Índice
 
-  - [Índice](#índice)
   - [Instalação](#instalação)
   - [Como Usar?](#como-usar)
   - [Cotações de Frete](#cotações-de-frete)
@@ -40,13 +40,11 @@ na seção `require` do seu arquivo `composer.json`.
 
 ## Como Usar?
 ## Cotações de Frete
-As cotações de frete oferecidas pelo Melhor Envio são uma ferramenta essencial para e-commerce e envios em geral.
-Com base nas integrações com diversas transportadoras.
 
 Em nosso SDK é permitido realizar as cotações tanto por produtos, quanto por pacotes.
 
 ### Por Produtos
-- É possível realizar o cálculo de um frete por produtos individualmente, informando o peso e os demais dados abaixo.
+É possível realizar o cálculo de um frete por produtos individualmente, informando o peso e os demais dados abaixo.
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
@@ -152,7 +150,7 @@ Saída
 ```
 
 ### Por Pacotes
-- É possível realizar o cálculo por pacotes, seguindo o modelo abaixo:
+É possível realizar o cálculo por pacotes, seguindo o modelo abaixo:
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
@@ -261,11 +259,10 @@ Saída
 
 Nosso SDK permite aos usuários reunir e organizar os produtos a serem enviados em um único local. 
 
-Através de integrações simples e intuitivas, é possível adicionar itens ao carrinho, detalhando informações como peso, 
-dimensões e valor declarado. 
-Isso proporciona uma visão abrangente dos envios planejados, facilitando a compra de fretes, a geração de etiquetas  tudo em um só lugar.
+É possível adicionar itens ao carrinho detalhando informações como peso, dimensões e valor declarado.
 
-Antes de prosseguir, você deverá inserir á um carrinho de compras os produtos que serão enviados, nesse passo será gerado o pedido com todos os detalhes, vale ressaltar sobre o id retornado, ele quem será utilizado para a compra de frete e geração de etiqueta.
+Antes de prosseguir, você deverá adicionar num carrinho os produtos que serão enviados. Nesse passo será gerado o pedido com todos os detalhes e será retornado um id, 
+que será necessário posteriormente para a compra de frete e geração de etiqueta.
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
@@ -335,8 +332,8 @@ Saída
     'protocol' => ORD-202312198407
     'serviceId' => 2
     'price' => 615.76
-    'deliveryMin' => 4
-    'deliveryMax' => 5
+    'deliveryMinDays' => 4
+    'deliveryMaxDays' => 5
     'status' => pending
     'payloadDetails' => [
             'id' => 9af54411-a4c1-4e64-9ccd-06959f59b984
@@ -349,18 +346,16 @@ Saída
 ```
 
 ### Compra de Fretes
-A compra de fretes é um processo simplificado e eficiente para os usuários que desejam enviar suas encomendas.
+Após selecionar a melhor opção de frete com base nas cotações disponíveis,
+é possível realizar a compra direta dos serviços de transporte de transportadoras parceiras. 
 
-Após selecionar a melhor opção de frete com base nas cotações disponíveis, é possivel realizar a compra direta dos serviços de transporte de diversas transportadoras parceiras. 
-
-
-Para esta ação é requisitado o id do pedido, à partir dessa informação será possivel realizar a compra.
+Para esta ação é necessário o id do pedido.
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OrderCollection;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\Order;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\OrderCollection;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\Order;
 
 $melhorEnvioService = new MelhorEnvioService(
     accessToken: "xxxxxx.yyyyyyy.zzzzzz",
@@ -368,7 +363,7 @@ $melhorEnvioService = new MelhorEnvioService(
     //isSandBox: true (Optional)
 );
 
-$checkoutLabelResponse = $melhorEnvioService->checkoutLabel(
+$confirmPurchaseLabelResponse = $melhorEnvioService->confirmPurchase(
     inputData: new InputData(
         orders: new OrderCollection(
             [
@@ -380,7 +375,7 @@ $checkoutLabelResponse = $melhorEnvioService->checkoutLabel(
     )
 );
 
-print_r($checkoutLabelResponse);
+print_r($confirmPurchaseLabelResponse);
 ```
 Saída
 
@@ -462,8 +457,6 @@ Saída
 ```
 
 ### Geração de Etiquetas
-A geração de etiquetas no Melhor Envio é uma etapa crucial e conveniente no processo de envio de pacotes. 
-
 Após a escolha da opção de frete desejada e a compra do serviço, nosso SDK possibilita a criação rápida e simples de etiquetas de envio.
 
 Para realizar essa ação será necessário o id do pedido.
@@ -519,9 +512,9 @@ use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volume as AddShippingToCartV
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\VolumeCollection as AddShippingToCartVolumeCollection;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\FromData as AddShippingToCartFromData;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData as CheckoutLabelInput;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\Order as CheckoutLabelOrder;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OrderCollection as CheckoutLabelOrderCollection;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData as ConfirmPurchaseLabelInput;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\Order as ConfirmPurchaseLabelOrder;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\OrderCollection as ConfirmPurchaseLabelOrderCollection;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData as GenerateLabelInputData;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\Order as GenerateLabelOrder;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OrderCollection as GenerateLabelOrderCollection;
@@ -609,11 +602,11 @@ $addShippingToCartResponse = $melhorEnvioService->addShippingToCart(new AddShipp
  Compra de frete
  */
 
-$checkoutLabelResponse = $melhorEnvioService->checkoutLabel(
-    new CheckoutLabelInput(
-        orders: new CheckoutLabelOrderCollection(
+$confirmPurchaseLabelResponse = $melhorEnvioService->confirmPurchase(
+    new ConfirmPurchaseLabelInput(
+        orders: new ConfirmPurchaseLabelOrderCollection(
             [
-                new CheckoutLabelOrder(
+                new ConfirmPurchaseLabelOrder(
                     key: $addShippingToCartResponse['id']
                 )
             ]
@@ -643,6 +636,6 @@ Pull Request são bem-vindos. Para mudanças importantes, abra primeiro uma issu
 
 Certifique-se de atualizar os testes conforme apropriado.
 
-## Licence
+## License
 
 Este pacote é lançado sob a licença [MIT](https://choosealicense.com/licenses/mit/). Consulte o pacote [LICENSE](./LICENSE) para obter detalhes.

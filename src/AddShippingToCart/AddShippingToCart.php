@@ -6,8 +6,9 @@ namespace AstrotechLabs\MelhorEnvio\AddShippingToCart;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
+use GuzzleHttp\Exception\ServerException;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OutputData;
+use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
 
 final class AddShippingToCart
 {
@@ -41,13 +42,19 @@ final class AddShippingToCart
                 'json' => $input->toArray()
             ]);
             $responsePayload = json_decode($response->getBody()->getContents(), true);
-        } catch (ClientException $e) {
+        } catch (
+            ClientException
+            | ServerException
+            $e
+        ) {
             $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $key = isset($responsePayload['errors']) ? array_key_first($responsePayload['errors']) : "Request Error";
+            $description = isset($responsePayload['message']) ? $responsePayload['message'] : $responsePayload['error'];
 
             throw new MelhorEnvioAddShippingToCartException(
                 code: $e->getCode(),
-                key: array_key_first($responsePayload['errors']),
-                description: $responsePayload['message'],
+                key: $key,
+                description: $description,
                 responsePayload:$responsePayload
             );
         }
@@ -56,8 +63,8 @@ final class AddShippingToCart
             protocol: $responsePayload['protocol'],
             serviceId: $responsePayload['service_id'],
             price: $responsePayload['price'],
-            deliveryMin: $responsePayload['delivery_min'],
-            deliveryMax: $responsePayload['delivery_max'],
+            deliveryMinDays: $responsePayload['delivery_min'],
+            deliveryMaxDays: $responsePayload['delivery_max'],
             status: $responsePayload['status'],
             payloadDetails: $responsePayload
         );
