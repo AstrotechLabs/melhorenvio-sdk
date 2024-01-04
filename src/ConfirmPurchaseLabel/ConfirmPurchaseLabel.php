@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace AstrotechLabs\MelhorEnvio\CheckoutLabel;
+namespace AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OutputData;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\OutputData;
 use GuzzleHttp\Exception\ServerException;
 
-final class CheckoutLabel
+final class ConfirmPurchaseLabel
 {
     private Client $httpClient;
 

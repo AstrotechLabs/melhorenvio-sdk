@@ -353,9 +353,9 @@ Para esta ação é necessário o id do pedido.
 
 ```php
 use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OrderCollection;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\Order;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\OrderCollection;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\Order;
 
 $melhorEnvioService = new MelhorEnvioService(
     accessToken: "xxxxxx.yyyyyyy.zzzzzz",
@@ -363,7 +363,7 @@ $melhorEnvioService = new MelhorEnvioService(
     //isSandBox: true (Optional)
 );
 
-$checkoutLabelResponse = $melhorEnvioService->confirmPurchase(
+$confirmPurchaseLabelResponse = $melhorEnvioService->confirmPurchase(
     inputData: new InputData(
         orders: new OrderCollection(
             [
@@ -375,7 +375,7 @@ $checkoutLabelResponse = $melhorEnvioService->confirmPurchase(
     )
 );
 
-print_r($checkoutLabelResponse);
+print_r($confirmPurchaseLabelResponse);
 ```
 Saída
 
@@ -512,9 +512,9 @@ use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volume as AddShippingToCartV
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\VolumeCollection as AddShippingToCartVolumeCollection;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\FromData as AddShippingToCartFromData;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData as CheckoutLabelInput;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\Order as CheckoutLabelOrder;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\OrderCollection as CheckoutLabelOrderCollection;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData as ConfirmPurchaseLabelInput;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\Order as ConfirmPurchaseLabelOrder;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\OrderCollection as ConfirmPurchaseLabelOrderCollection;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData as GenerateLabelInputData;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\Order as GenerateLabelOrder;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OrderCollection as GenerateLabelOrderCollection;
@@ -602,11 +602,11 @@ $addShippingToCartResponse = $melhorEnvioService->addShippingToCart(new AddShipp
  Compra de frete
  */
 
-$checkoutLabelResponse = $melhorEnvioService->confirmPurchase(
-    new CheckoutLabelInput(
-        orders: new CheckoutLabelOrderCollection(
+$confirmPurchaseLabelResponse = $melhorEnvioService->confirmPurchase(
+    new ConfirmPurchaseLabelInput(
+        orders: new ConfirmPurchaseLabelOrderCollection(
             [
-                new CheckoutLabelOrder(
+                new ConfirmPurchaseLabelOrder(
                     key: $addShippingToCartResponse['id']
                 )
             ]

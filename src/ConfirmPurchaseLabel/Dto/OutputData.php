@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto;
+namespace AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto;
 
 use JsonSerializable;
 

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AstrotechLabs\MelhorEnvio;
 
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\CheckoutLabel;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\ConfirmPurchaseLabel;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\GenerateLabel;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\AddShippingToCart;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\FreightCalculation;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\Dto\InputData as CheckoutLabelInput;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData as CheckoutLabelInput;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData as GenerateLabelInput;
 use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem as AddShippingToCartInput;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData as FreightCalculationInput;
@@ -34,7 +34,7 @@ final class MelhorEnvioService
 
     public function confirmPurchase(CheckoutLabelInput $inputData)
     {
-        $addShippingToCart = new CheckoutLabel(
+        $addShippingToCart = new ConfirmPurchaseLabel(
             accessToken: $this->accessToken,
             userAgent: $this->userAgent,
             isSandbox: $this->isSandbox

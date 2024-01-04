@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AstrotechLabs\MelhorEnvio\FreightCalculation\Dto;
 
 use JsonSerializable;
-use AstrotechLabs\MelhorEnvio\CheckoutLabel\MelhorEnvioCheckoutLabelException;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\MelhorEnvioCheckoutLabelException;
 
 final class InputData implements JsonSerializable
 {

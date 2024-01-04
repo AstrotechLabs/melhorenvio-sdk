@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AstrotechLabs\MelhorEnvio\CheckoutLabel;
+namespace AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel;
 
 use Exception;
 
