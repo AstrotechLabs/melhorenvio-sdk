@@ -6,9 +6,9 @@ namespace AstrotechLabs\MelhorEnvio\GenerateLabel;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OutputData;
-use GuzzleHttp\Exception\ServerException;
 
 final class GenerateLabel
 {

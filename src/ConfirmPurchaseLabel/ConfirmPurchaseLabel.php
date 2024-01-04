@@ -6,9 +6,9 @@ namespace AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\OutputData;
-use GuzzleHttp\Exception\ServerException;
 
 final class ConfirmPurchaseLabel
 {

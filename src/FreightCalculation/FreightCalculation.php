@@ -6,9 +6,9 @@ namespace AstrotechLabs\MelhorEnvio\FreightCalculation;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\OutputData;
-use GuzzleHttp\Exception\ServerException;
 
 final class FreightCalculation
 {

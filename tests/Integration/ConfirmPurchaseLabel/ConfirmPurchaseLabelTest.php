@@ -7,16 +7,16 @@ namespace Tests\Integration\ConfirmPurchaseLabel;
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;
 use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\Order;
-use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\ConfirmPurchaseLabel;
 use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\OrderCollection;
+use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\ConfirmPurchaseLabel;
 use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\MelhorEnvioCheckoutLabelException;
 
 final class ConfirmPurchaseLabelTest extends TestCase
 {
     use HttpClientMock;
 
-    public function testLookingForFreightCalculation()
+    public function testConfirmingPaymentOfTheLabel()
     {
 
         $confirmPurchaseLabel = new ConfirmPurchaseLabel(
@@ -25,14 +25,16 @@ final class ConfirmPurchaseLabelTest extends TestCase
             isSandbox: true
         );
 
-        $result = $confirmPurchaseLabel->confirmPurchase(new InputData(
-            orders: new OrderCollection(
-                [new Order(
-                    key: '9af3f99a-301e-4239-9c3d-7cb7e7bb3825'
+        $result = $confirmPurchaseLabel->confirmPurchase(
+            new InputData(
+                orders: new OrderCollection(
+                    [new Order(
+                        key: '9af3f99a-301e-4239-9c3d-7cb7e7bb3825'
+                    )
+                    ]
                 )
-                ]
             )
-        ));
+        );
         $this->assertNotEmpty($result->purchase);
         $this->assertNotEmpty($result->payloadDetails);
     }
