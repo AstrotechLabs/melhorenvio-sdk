@@ -8,7 +8,6 @@ compra de frete e geração de etiquetas (veja exemplos).
 
 ## Índice
 
-  - [Índice](#índice)
   - [Instalação](#instalação)
   - [Como Usar?](#como-usar)
   - [Cotações de Frete](#cotações-de-frete)
