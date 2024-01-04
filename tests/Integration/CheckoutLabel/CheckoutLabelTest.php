@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CheckoutLabel;
+namespace Tests\Integration\CheckoutLabel;
 
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;

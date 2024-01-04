@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\AddShippingToCart;
+namespace Tests\Integration\AddShippingToCart;
 
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;

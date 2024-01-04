@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FreightCalculation;
+namespace Tests\Integration\FreightCalculation;
 
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;
