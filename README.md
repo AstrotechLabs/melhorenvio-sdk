@@ -603,7 +603,7 @@ $addShippingToCartResponse = $melhorEnvioService->addShippingToCart(new AddShipp
  Compra de frete
  */
 
-$checkoutLabelResponse = $melhorEnvioService->confirmPushase(
+$checkoutLabelResponse = $melhorEnvioService->confirmPurchase(
     new CheckoutLabelInput(
         orders: new CheckoutLabelOrderCollection(
             [
