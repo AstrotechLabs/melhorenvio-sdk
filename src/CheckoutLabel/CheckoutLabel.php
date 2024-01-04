@@ -27,7 +27,7 @@ final class CheckoutLabel
         );
     }
 
-    public function confirmPushase(InputData $input): OutputData
+    public function confirmPurchase(InputData $input): OutputData
     {
         $headers = [
             'Accept' => 'application/json',

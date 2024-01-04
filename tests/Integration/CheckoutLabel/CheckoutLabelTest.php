@@ -25,7 +25,7 @@ final class CheckoutLabelTest extends TestCase
             isSandbox: true
         );
 
-        $result = $checkoutLabel->confirmPushase(new InputData(
+        $result = $checkoutLabel->confirmPurchase(new InputData(
             orders: new OrderCollection(
                 [new Order(
                     key: '9af3f99a-301e-4239-9c3d-7cb7e7bb3825'
@@ -49,7 +49,7 @@ final class CheckoutLabelTest extends TestCase
             isSandbox: true
         );
 
-        $checkoutLabel->confirmPushase(new InputData(
+        $checkoutLabel->confirmPurchase(new InputData(
             orders: new OrderCollection(
                 [new Order(
                     key: '67173a6e-2955-4c1c-bf94-9ef6fd399a12'
@@ -71,7 +71,7 @@ final class CheckoutLabelTest extends TestCase
             isSandbox: true
         );
 
-        $checkoutLabel->confirmPushase(new InputData(
+        $checkoutLabel->confirmPurchase(new InputData(
             orders: new OrderCollection(
                 [new Order(
                     key: 'assdasassas-2955-4c1c-bf94-9ef6fd399a12'

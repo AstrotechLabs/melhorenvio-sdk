@@ -364,7 +364,7 @@ $melhorEnvioService = new MelhorEnvioService(
     //isSandBox: true (Optional)
 );
 
-$checkoutLabelResponse = $melhorEnvioService->confirmPushase(
+$checkoutLabelResponse = $melhorEnvioService->confirmPurchase(
     inputData: new InputData(
         orders: new OrderCollection(
             [

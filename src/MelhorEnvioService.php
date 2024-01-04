@@ -32,14 +32,14 @@ final class MelhorEnvioService
         return $addShippingToCart->add($inputData)->toArray();
     }
 
-    public function confirmPushase(CheckoutLabelInput $inputData)
+    public function confirmPurchase(CheckoutLabelInput $inputData)
     {
         $addShippingToCart = new CheckoutLabel(
             accessToken: $this->accessToken,
             userAgent: $this->userAgent,
             isSandbox: $this->isSandbox
         );
-        return $addShippingToCart->confirmPushase($inputData)->toArray();
+        return $addShippingToCart->confirmPurchase($inputData)->toArray();
     }
 
     public function freightCalculate(FreightCalculationInput $inputData)
