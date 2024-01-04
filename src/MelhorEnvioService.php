@@ -32,7 +32,7 @@ final class MelhorEnvioService
         return $addShippingToCart->add($inputData)->toArray();
     }
 
-    public function checkoutLabel(CheckoutLabelInput $inputData)
+    public function confirmPushase(CheckoutLabelInput $inputData)
     {
         $addShippingToCart = new CheckoutLabel(
             accessToken: $this->accessToken,

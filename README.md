@@ -1,7 +1,7 @@
 # Melhor Envio SDK para PHP
 
 Bem-vindo ao SDK do Melhor Envio!
-Nossa biblioteca permite ao desenvolvedor uma comunicação simples e direta com o serviço Melhor Envio.
+Nossa biblioteca permite ao desenvolvedor realizar uma comunicação simples e direta com o serviço Melhor Envio.
 Com ela é possível realizar operações como fazer cotação de frete, criação de pedidos, 
 compra de frete e geração de etiquetas (veja exemplos). 
 
@@ -41,7 +41,6 @@ na seção `require` do seu arquivo `composer.json`.
 
 ## Como Usar?
 ## Cotações de Frete
-Com base nas integrações com diversas transportadoras.
 
 Em nosso SDK é permitido realizar as cotações tanto por produtos, quanto por pacotes.
 
@@ -263,7 +262,7 @@ Nosso SDK permite aos usuários reunir e organizar os produtos a serem enviados 
 
 É possível adicionar itens ao carrinho detalhando informações como peso, dimensões e valor declarado.
 
-Antes de prosseguir, você deverá adicionar num carrinho os produtos que serão enviados. Nesse passo será gerado o pedido com todos os detalhes e será retorna um id, 
+Antes de prosseguir, você deverá adicionar num carrinho os produtos que serão enviados. Nesse passo será gerado o pedido com todos os detalhes e será retornado um id, 
 que será necessário posteriormente para a compra de frete e geração de etiqueta.
 
 ```php
@@ -365,7 +364,7 @@ $melhorEnvioService = new MelhorEnvioService(
     //isSandBox: true (Optional)
 );
 
-$checkoutLabelResponse = $melhorEnvioService->checkoutLabel(
+$checkoutLabelResponse = $melhorEnvioService->confirmPushase(
     inputData: new InputData(
         orders: new OrderCollection(
             [
@@ -604,7 +603,7 @@ $addShippingToCartResponse = $melhorEnvioService->addShippingToCart(new AddShipp
  Compra de frete
  */
 
-$checkoutLabelResponse = $melhorEnvioService->checkoutLabel(
+$checkoutLabelResponse = $melhorEnvioService->confirmPushase(
     new CheckoutLabelInput(
         orders: new CheckoutLabelOrderCollection(
             [
@@ -638,6 +637,6 @@ Pull Request são bem-vindos. Para mudanças importantes, abra primeiro uma issu
 
 Certifique-se de atualizar os testes conforme apropriado.
 
-## Licence
+## License
 
 Este pacote é lançado sob a licença [MIT](https://choosealicense.com/licenses/mit/). Consulte o pacote [LICENSE](./LICENSE) para obter detalhes.
