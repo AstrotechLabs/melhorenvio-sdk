@@ -26,14 +26,14 @@ A forma mais recomendada de instalar este pacote é através do [composer](http:
 
 Para instalar, basta executar o comando abaixo
 
-```bash
-@todo
+```php
+php composer.phar require astrotechlabs/melhorenvio-sdk
 ```
 
 ou adicionar esse linha
 
 ```
-@todo
+"astrotechlabs/melhorenvio-sdk": "^1.0"
 ```
 
 na seção `require` do seu arquivo `composer.json`.
@@ -60,7 +60,7 @@ $melhorEnvioService = new MelhorEnvioService(
 );
 
 $freightCalculationResponse = $melhorEnvioService->freightCalculate(
-    inputData: new InputData(
+    new InputData(
         to: new ToData(postalCode: "60820050"),
         from: new FromData(postalCode: "60820050"),
         products: new ProductCollection(
@@ -167,7 +167,7 @@ $melhorEnvioService = new MelhorEnvioService(
 );
 
 $freightCalculationResponse = $melhorEnvioService->freightCalculate(
-    inputData: new InputData(
+    new InputData(
         to: new ToData(postalCode: "60876590"),
         from: new FromData(postalCode: "60820050"),
         package: new PackageCollection(
@@ -364,7 +364,7 @@ $melhorEnvioService = new MelhorEnvioService(
 );
 
 $confirmPurchaseLabelResponse = $melhorEnvioService->confirmPurchase(
-    inputData: new InputData(
+    new InputData(
         orders: new OrderCollection(
             [
                 new Order(
