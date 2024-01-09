@@ -4,28 +4,34 @@ declare(strict_types=1);
 
 namespace Tests\Integration\ConfirmPurchaseLabel;
 
+use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;
 use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\Order;
 use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData;
 use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\OrderCollection;
-use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\ConfirmPurchaseLabel;
 use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\MelhorEnvioCheckoutLabelException;
 
 final class ConfirmPurchaseLabelTest extends TestCase
 {
     use HttpClientMock;
 
-    public function testConfirmingPaymentOfTheLabel()
-    {
+    private MelhorEnvioService $service;
 
-        $confirmPurchaseLabel = new ConfirmPurchaseLabel(
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $this->service = new MelhorEnvioService(
             accessToken: $_ENV['MELHOR_ENVIO_API_TOKEN'],
             userAgent: $_ENV['MELHOR_ENVIO_USER_AGENT'],
             isSandbox: true
         );
+    }
 
-        $result = $confirmPurchaseLabel->confirmPurchase(
+    public function testConfirmingPaymentOfTheLabel()
+    {
+
+        $result = $this->service->confirmPurchase(
             new InputData(
                 orders: new OrderCollection(
                     [new Order(
@@ -35,8 +41,8 @@ final class ConfirmPurchaseLabelTest extends TestCase
                 )
             )
         );
-        $this->assertNotEmpty($result->purchase);
-        $this->assertNotEmpty($result->payloadDetails);
+        $this->assertNotEmpty($result['purchase']);
+        $this->assertNotEmpty($result['payloadDetails']);
     }
 
     public function testItShouldThrowAnErrorWhenResponseReturnsAnyError()
@@ -45,13 +51,7 @@ final class ConfirmPurchaseLabelTest extends TestCase
         $this->expectExceptionMessage('O campo orders deve ter pelo menos 1 itens.');
         $this->expectExceptionCode(400);
 
-        $confirmPurchaseLabel = new ConfirmPurchaseLabel(
-            accessToken: $_ENV['MELHOR_ENVIO_API_TOKEN'],
-            userAgent: $_ENV['MELHOR_ENVIO_USER_AGENT'],
-            isSandbox: true
-        );
-
-        $confirmPurchaseLabel->confirmPurchase(new InputData(
+        $this->service->confirmPurchase(new InputData(
             orders: new OrderCollection(
                 [new Order(
                     key: '67173a6e-2955-4c1c-bf94-9ef6fd399a12'
@@ -67,13 +67,7 @@ final class ConfirmPurchaseLabelTest extends TestCase
         $this->expectExceptionMessage('[error: orders.0] - O campo orders.0 deve ter pelo menos 36 caracteres.');
         $this->expectExceptionCode(422);
 
-        $confirmPurchaseLabel = new ConfirmPurchaseLabel(
-            accessToken: $_ENV['MELHOR_ENVIO_API_TOKEN'],
-            userAgent: $_ENV['MELHOR_ENVIO_USER_AGENT'],
-            isSandbox: true
-        );
-
-        $confirmPurchaseLabel->confirmPurchase(new InputData(
+        $this->service->confirmPurchase(new InputData(
             orders: new OrderCollection(
                 [new Order(
                     key: 'assdasassas-2955-4c1c-bf94-9ef6fd399a12'

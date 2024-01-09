@@ -12,33 +12,23 @@ use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
 
 final class AddShippingToCart
 {
-    private Client $httpClient;
+    /**
+     * @param Client $httpClient
+     * @param array $headers
+     */
 
     public function __construct(
-        private readonly string $accessToken,
-        private readonly string $userAgent,
-        private readonly bool $isSandbox = false
+        private readonly Client $httpClient,
+        private readonly array $headers
     ) {
-
-        $this->httpClient = new Client(
-            [
-                'base_uri' => $this->isSandbox ? 'https://sandbox.melhorenvio.com.br' : 'https://app.melhorenvio.com.br'
-            ]
-        );
     }
 
     public function add(AddShippingToCartItem $input): OutputData
     {
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => "Bearer {$this->accessToken}",
-            'Content-Type' => 'application/json',
-            'User-Agent' => $this->userAgent
-        ];
 
         try {
             $response = $this->httpClient->post("/api/v2/me/cart", [
-                'headers' => $headers,
+                'headers' => $this->headers,
                 'json' => $input->toArray()
             ]);
             $responsePayload = json_decode($response->getBody()->getContents(), true);

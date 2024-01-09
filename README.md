@@ -503,27 +503,7 @@ Saída
 
 ```php
 <?php
-
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\OptionsData as AddShippingToCartOptionData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Product as AddShippingToCartProduct;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ProductCollection as AddShippingToCartProductCollection;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\ToData as AddShippingToCartToData;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\Volume as AddShippingToCartVolume;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\VolumeCollection as AddShippingToCartVolumeCollection;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\AddShippingToCartItem;
-use AstrotechLabs\MelhorEnvio\AddShippingToCart\Dto\FromData as AddShippingToCartFromData;
-use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\InputData as ConfirmPurchaseLabelInput;
-use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\Order as ConfirmPurchaseLabelOrder;
-use AstrotechLabs\MelhorEnvio\ConfirmPurchaseLabel\Dto\OrderCollection as ConfirmPurchaseLabelOrderCollection;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\InputData as GenerateLabelInputData;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\Order as GenerateLabelOrder;
-use AstrotechLabs\MelhorEnvio\GenerateLabel\Dto\OrderCollection as GenerateLabelOrderCollection;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FromData as FreightCalculationFromData;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData as FreightCalculationInputData;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Product as FreightCalculationProduct;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ProductCollection as FreightCalculationProductCollection;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ToData as FreightCalculationToData;
-use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
+// imports aqui
 
 $melhorEnvioService = new MelhorEnvioService(
     accessToken: "xxxxxx.yyyyyyy.zzzzzz",
