@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Integration\FreightCalculation;
 
+use AstrotechLabs\MelhorEnvio\MelhorEnvioService;
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ToData;
@@ -11,7 +12,6 @@ use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Package;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\Product;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\FromData;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\InputData;
-use AstrotechLabs\MelhorEnvio\FreightCalculation\FreightCalculation;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\PackageCollection;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\Dto\ProductCollection;
 use AstrotechLabs\MelhorEnvio\FreightCalculation\MelhorEnvioFreightCalculationException;
@@ -20,16 +20,20 @@ final class FreightCalculationTest extends TestCase
 {
     use HttpClientMock;
 
-    public function testLookingForFreightCalculationInProduct()
-    {
+    private MelhorEnvioService $service;
 
-        $freightCalculation = new FreightCalculation(
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $this->service = new MelhorEnvioService(
             accessToken: $_ENV['MELHOR_ENVIO_API_TOKEN'],
             userAgent: $_ENV['MELHOR_ENVIO_USER_AGENT'],
             isSandbox: true
         );
-
-        $result = $freightCalculation->calculate(new InputData(
+    }
+    public function testLookingForFreightCalculationInProduct()
+    {
+        $result = $this->service->freightCalculate(new InputData(
             new ToData(postalCode: "60820050"),
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
@@ -47,19 +51,12 @@ final class FreightCalculationTest extends TestCase
             )
         ));
 
-        $this->assertNotEmpty($result->deliveryDetails);
+        $this->assertNotEmpty($result['deliveryDetails']);
     }
 
     public function testLookingForFreightCalculationInPackages()
     {
-
-        $freightCalculation = new FreightCalculation(
-            accessToken: $_ENV['MELHOR_ENVIO_API_TOKEN'],
-            userAgent: $_ENV['MELHOR_ENVIO_USER_AGENT'],
-            isSandbox: true
-        );
-
-        $result = $freightCalculation->calculate(new InputData(
+        $result = $this->service->freightCalculate(new InputData(
             new ToData(postalCode: "60820050"),
             new FromData(postalCode: "60820050"),
             package: new PackageCollection(
@@ -74,19 +71,12 @@ final class FreightCalculationTest extends TestCase
             ),
             isProduct: false
         ));
-        $this->assertNotEmpty($result->deliveryDetails);
+        $this->assertNotEmpty($result['deliveryDetails']);
     }
 
     public function testLookingForFreightCalculationWithMultiplePackages()
     {
-
-        $freightCalculation = new FreightCalculation(
-            accessToken: $_ENV['MELHOR_ENVIO_API_TOKEN'],
-            userAgent: $_ENV['MELHOR_ENVIO_USER_AGENT'],
-            isSandbox: true
-        );
-
-        $result = $freightCalculation->calculate(new InputData(
+        $result = $this->service->freightCalculate(new InputData(
             new ToData(postalCode: "60820050"),
             new FromData(postalCode: "60820050"),
             package: new PackageCollection(
@@ -107,7 +97,7 @@ final class FreightCalculationTest extends TestCase
             ),
             isProduct: false
         ));
-        $this->assertNotEmpty($result->deliveryDetails);
+        $this->assertNotEmpty($result['deliveryDetails']);
     }
 
     public function testItShouldThrowAnErrorWhenResponseReturnsAnyError()
@@ -115,13 +105,7 @@ final class FreightCalculationTest extends TestCase
         $this->expectException(MelhorEnvioFreightCalculationException::class);
         $this->expectExceptionCode(422);
 
-        $freightCalculation = new FreightCalculation(
-            accessToken: $_ENV['MELHOR_ENVIO_API_TOKEN'],
-            userAgent: $_ENV['MELHOR_ENVIO_USER_AGENT'],
-            isSandbox: true
-        );
-
-        $freightCalculation->calculate(new InputData(
+        $this->service->freightCalculate(new InputData(
             new ToData(postalCode: "60820050"),
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
@@ -146,13 +130,7 @@ final class FreightCalculationTest extends TestCase
         $this->expectExceptionMessage('O campo postal code não pode ser vazio');
         $this->expectExceptionCode(400);
 
-        $freightCalculation = new FreightCalculation(
-            accessToken: $_ENV['MELHOR_ENVIO_API_TOKEN'],
-            userAgent: $_ENV['MELHOR_ENVIO_USER_AGENT'],
-            isSandbox: true
-        );
-
-        $freightCalculation->calculate(new InputData(
+        $this->service->freightCalculate(new InputData(
             new ToData(postalCode: ""),
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
@@ -177,13 +155,7 @@ final class FreightCalculationTest extends TestCase
         $this->expectExceptionMessage('O campo postal code só pode conter numeros');
         $this->expectExceptionCode(400);
 
-        $freightCalculation = new FreightCalculation(
-            accessToken: $_ENV['MELHOR_ENVIO_API_TOKEN'],
-            userAgent: $_ENV['MELHOR_ENVIO_USER_AGENT'],
-            isSandbox: true
-        );
-
-        $freightCalculation->calculate(new InputData(
+        $this->service->freightCalculate(new InputData(
             new ToData(postalCode: "dlaksml"),
             new FromData(postalCode: "60820050"),
             products: new ProductCollection(
